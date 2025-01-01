@@ -9,28 +9,24 @@ import java.awt.event.MouseEvent;
 
 public class MyButton extends JButton {
     private Theme currentTheme;
-    private Color defaultColor = new Color(70, 130, 180); // Blue
-    private Color hoverColor = new Color(30, 80, 150);
 
-    public MyButton(String text,String iconName, Theme currentTheme) {
+    public MyButton(Theme currentTheme, String text, Color bgColor, Color hoverColor) {
         this.currentTheme = currentTheme;
+
         setText(text);
+        setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        //setForeground(currentTheme.primaryTextColor());
-        //setFont(new Font("Arial", Font.BOLD, 16));
+        setBackground(bgColor);
+        setForeground(currentTheme.fontColor());
+        setFont(new Font("Arial", Font.BOLD, 22));
 
-        if (iconName != null) {
-            setIcon(currentTheme.getButtonIcon(iconName)); // Load the button icon from the theme
-        }
-
-
-        setForeground(Color.black);
-        setBackground(defaultColor);
         setBorderPainted(false);
+        setMargin(new Insets(10, 50, 10, 50));
+
         setFocusPainted(false);
         setContentAreaFilled(true);
-        setOpaque(true);
-        setPreferredSize(new Dimension(200, 60));
+
+        setCursor(new Cursor(Cursor.HAND_CURSOR));
 
         addMouseListener(new MouseAdapter() {
             @Override
@@ -40,7 +36,12 @@ public class MyButton extends JButton {
 
             @Override
             public void mouseExited(MouseEvent e) {
-                setBackground(defaultColor);
+                setBackground(bgColor);
+            }
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                setBackground(hoverColor);
             }
         });
     }

@@ -6,11 +6,24 @@ import java.awt.*;
 public class ThemeLight extends Theme {
     @Override
     public Color bgColor() {
-        return new Color(255, 255, 255);
+        return new Color(239, 255, 252);
     }
+
     @Override
     public ImageIcon getButtonIcon(String name) {
 
         return new ImageIcon(ThemeLight.class.getResource("/icons/" + name));
     }
+
+    @Override
+    public Color fontColor() {
+        return new Color(39,39,39);
+    }
+
+    @Override
+    public Color fieldsBgColor() {
+        return new Color(232, 246, 243);
+    }
+
+
 }

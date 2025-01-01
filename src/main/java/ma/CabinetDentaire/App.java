@@ -1,6 +1,6 @@
 package ma.CabinetDentaire;
 
-import ma.CabinetDentaire.presentation.view.Auth.LoginView;
+import ma.CabinetDentaire.presentation.view.LoginView;
 import ma.CabinetDentaire.presentation.view.themes.ThemeLight;
 
 import javax.swing.*;
