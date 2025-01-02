@@ -3,6 +3,7 @@ package ma.CabinetDentaire.presentation.view.palette.buttons;
 import ma.CabinetDentaire.presentation.view.themes.Theme;
 
 import javax.swing.*;
+import javax.swing.plaf.basic.BasicButtonUI;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -25,6 +26,8 @@ public class MyButton extends JButton {
 
         setFocusPainted(false);
         setContentAreaFilled(true);
+
+        setUI(new BasicButtonUI());
 
         setCursor(new Cursor(Cursor.HAND_CURSOR));
 
