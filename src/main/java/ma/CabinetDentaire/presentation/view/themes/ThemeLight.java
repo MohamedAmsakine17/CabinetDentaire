@@ -10,6 +10,11 @@ public class ThemeLight extends Theme {
     }
 
     @Override
+    public Color darkBgColor() {
+        return new Color(200, 212, 209);
+    }
+
+    @Override
     public ImageIcon getButtonIcon(String name) {
 
         return new ImageIcon(ThemeLight.class.getResource("/icons/" + name));

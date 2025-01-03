@@ -95,8 +95,17 @@ public class LoginView extends JFrame {
                 if (userDAO.authenticate(username, password)) {
                     messageText.setText("Login successful!");
                     messageText.setForeground(currentTheme.greenColor());
+
+                    Timer timer = new Timer(750, new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            dispose();
+                            new MainView(currentTheme);
+                        }
+                    });
+                    timer.setRepeats(false);
+                    timer.start();
                 } else {
-                    // Show an error message if authentication fails
                     messageText.setText("Invalid username or password.");
                     messageText.setForeground(currentTheme.redColor());
                 }

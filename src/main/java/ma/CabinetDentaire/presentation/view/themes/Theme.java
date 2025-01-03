@@ -5,6 +5,7 @@ import java.awt.*;
 
 public abstract class Theme {
     public abstract Color bgColor();
+    public abstract Color darkBgColor();
     public abstract ImageIcon getButtonIcon(String name);
     public abstract Color fontColor();
     public abstract Color fieldsBgColor();
