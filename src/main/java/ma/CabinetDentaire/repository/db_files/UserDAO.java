@@ -1,7 +1,8 @@
 package ma.CabinetDentaire.repository.db_files;
 
 import ma.CabinetDentaire.entities.Utilisateur;
-import ma.CabinetDentaire.repository.Dao;
+import ma.CabinetDentaire.repository.CRUDRepository;
+import ma.CabinetDentaire.repository.CRUDRepository;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -10,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class UserDAO implements Dao<Utilisateur, Integer> {
+public class UserDAO implements CRUDRepository<Utilisateur, Integer> {
     private static final String CREDENTIALS_FILE = "src/main/data/credentials.txt";
 
     public boolean authenticate(String username, String password) {
@@ -41,9 +42,14 @@ public class UserDAO implements Dao<Utilisateur, Integer> {
     }
 
     @Override
-    public Optional<Utilisateur> findById(Integer integer) {
-        return Optional.empty();
+    public Utilisateur findById(Integer integer) {
+        return null;
     }
+
+    //@Override
+    //public Optional<Utilisateur> findById(Integer integer) {
+    //    return Optional.empty();
+    //}
 
     @Override
     public Utilisateur save(Utilisateur element) {
@@ -51,17 +57,14 @@ public class UserDAO implements Dao<Utilisateur, Integer> {
     }
 
     @Override
-    public boolean update(Utilisateur element) {
-        return false;
+    public void update(Utilisateur element) {
     }
 
     @Override
-    public boolean delete(Utilisateur element) {
-        return false;
+    public void delete(Utilisateur element) {
     }
 
     @Override
-    public boolean deleteById(Integer integer) {
-        return false;
+    public void deleteById(Integer integer) {
     }
 }

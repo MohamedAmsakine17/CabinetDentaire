@@ -5,7 +5,7 @@ import ma.CabinetDentaire.entities.enums.Sexe;
 import java.time.LocalDate;
 
 public class Personne {
-    private long id;
+    private Long id;
     private String cin;
     private String nom;
     private String prenom;
@@ -33,7 +33,7 @@ public class Personne {
     public void setDataDeNaissance(LocalDate dataDeNaissance) {this.dataDeNaissance = dataDeNaissance;}
     public void setSexe(Sexe sexe) {this.sexe = sexe;}
 
-    public long getId() {return id;}
+    public Long getId() {return id;}
     public String getCin() {return cin;}
     public String getNom() {return nom;}
     public String getPrenom() {return prenom;}
@@ -46,6 +46,18 @@ public class Personne {
 
 
     public Personne() {}
+    public Personne(Long id, String nom, String prenom , String email, String cin, Sexe sexe) {
+        this.id = id;
+        this.nom = nom;
+        this.prenom = prenom;
+        this.adresse = adresse;
+        this.telephone = telephone;
+        this.email = email;
+        this.cin = cin;
+        this.sexe = sexe;
+    }
+
+
     public Personne(Long id, String nom, String prenom, String adresse, String telephone, String email, String photoDeProfile, LocalDate dataDeNaissance ,Sexe sexe) {
         this.id = id;
         this.nom = nom;

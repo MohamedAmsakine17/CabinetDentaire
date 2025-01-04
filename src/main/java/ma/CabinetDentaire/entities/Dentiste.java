@@ -22,8 +22,7 @@ public class Dentiste extends Staff{
                     LocalDate dateDernierConnexion, LocalDate dateDeModification, Cabinet cabinetDeTravail,
                     StatusEmploye statusEmploye, Map<DayOfWeek, Disponibilite> disponibilite,
                     Double salaireDeBase, LocalDate dateRetourConge, Specialite specialite) {
-        super(id, cin, nom, prenom, adresse, telephone, email, photoDeProfile, dataDeNaissance, sexe,
-                username, password, dateDeCreation, dateDernierConnexion, dateDeModification,
+        super(username, password, dateDeCreation, dateDernierConnexion, dateDeModification, id, cin, nom, prenom, adresse, telephone, email, photoDeProfile, dataDeNaissance, sexe,
                 cabinetDeTravail, statusEmploye, disponibilite, salaireDeBase, dateRetourConge);
         this.specialite = specialite;
     }

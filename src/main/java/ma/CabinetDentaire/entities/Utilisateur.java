@@ -34,9 +34,9 @@ public class Utilisateur extends Personne {
         this.username = username;
         this.password = password;
     }
-    public Utilisateur(long id, String cin, String nom, String prenom, String adresse, String telephone, String email,
-                       String photoDeProfile, LocalDate dataDeNaissance, Sexe sexe, String username, String password,
-                       LocalDate dateDeCreation, LocalDate dateDernierConnexion, LocalDate dateDeModification) {
+    public Utilisateur(String username, String password,
+                       LocalDate dateDeCreation, LocalDate dateDernierConnexion, LocalDate dateDeModification,long id, String cin, String nom, String prenom, String adresse, String telephone, String email,
+                       String photoDeProfile, LocalDate dataDeNaissance, Sexe sexe) {
 
         super(id, nom, prenom, adresse, telephone, email, photoDeProfile, dataDeNaissance, sexe);
         this.username = username;

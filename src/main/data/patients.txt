@@ -1,0 +1,6 @@
+ID|NOM|PRENOM|EMAIL|CIN|SEXE
+3|Amsak|aymen|i.aymen@gmail.com|LB2424|Homme
+4|kamil|Imane|i.kamil@gmail.com|A6544|Femme
+6|Jahili|Ayoub|AyoubJahil@gmail.com|A6789|HOMME
+7|amsa|koko|koko@gmail.com|LB2432|FEMME
+8|Jahili|Ayoub|AyoubJahil@gmail.com|A6789|HOMME

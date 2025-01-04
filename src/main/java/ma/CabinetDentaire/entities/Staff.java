@@ -22,12 +22,12 @@ public class Staff extends Utilisateur{
     public Staff() {
         super();
     }
-    public Staff(long id, String cin, String nom, String prenom, String adresse, String telephone, String email,
-                 String photoDeProfile, LocalDate dataDeNaissance, Sexe sexe, String username, String password, LocalDate dateDeCreation, LocalDate dateDernierConnexion,
-                 LocalDate dateDeModification, Cabinet cabinetDeTravail, StatusEmploye statusEmploye,
+    public Staff(String username, String password, LocalDate dateDeCreation, LocalDate dateDernierConnexion,
+                 LocalDate dateDeModification, long id, String cin, String nom, String prenom, String adresse, String telephone, String email,
+                 String photoDeProfile, LocalDate dataDeNaissance, Sexe sexe , Cabinet cabinetDeTravail, StatusEmploye statusEmploye,
                  Map<DayOfWeek, Disponibilite> disponibilite, Double salaireDeBase, LocalDate dateRetourConge) {
-        super(id, cin, nom, prenom, adresse, telephone, email, photoDeProfile, dataDeNaissance, sexe, username, password
-                , dateDeCreation, dateDernierConnexion, dateDeModification);
+        super(username, password
+                , dateDeCreation, dateDernierConnexion, dateDeModification, id, cin, nom, prenom, adresse, telephone, email, photoDeProfile, dataDeNaissance, sexe );
         this.cabinetDeTravail = cabinetDeTravail;
         this.statusEmploye = statusEmploye;
         this.disponibilite = disponibilite;
