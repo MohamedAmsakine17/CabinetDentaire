@@ -1,6 +1,19 @@
-ID|NOM|PRENOM|EMAIL|CIN|SEXE
-3|Amsak|aymen|i.aymen@gmail.com|LB2424|Homme
-4|kamil|Imane|i.kamil@gmail.com|A6544|Femme
-6|Jahili|Ayoub|AyoubJahil@gmail.com|A6789|HOMME
-7|amsa|koko|koko@gmail.com|LB2432|FEMME
-8|Jahili|Ayoub|AyoubJahil@gmail.com|A6789|HOMME
+ID|NOM|PRENOM|CIN|ADRESSE|TELEPHONE|EMAIL|PFP|DATA_NAISSANCE|SEXE|GROUP_SANGUIN|MUTUELLE|PROFESSION|DOSSIERMEDICALE
+1|Amsakine|Mohamed|LB245932|Rabat Hassan n1082|0612345678|mohamed.amsakine@example.com|default_pfp.png|1980-05-10|Homme|A_POSITIF|CNSS|Enseignant|DM001
+2|El Alaoui|Fatima|MB543219|Casablanca Maarif n10|0619876543|fatima.elalaoui@example.com|default_pfp.png|1985-11-25|Femme|O_NEGATIF|CNOPS|Infirmière|DM002
+3|Bouzid|Ahmed|XC876543|Fès Nouvelle Ville n15|0609988776|ahmed.bouzid@example.com|default_pfp.png|2010-03-15|Homme|B_POSITIF|CNAM|Ingénieur|DM003
+4|Hariri|Sofia|GH234567|Marrakech Gueliz n5|0623456789|sofia.hariri@example.com|default_pfp.png|1998-07-30|Femme|AB_NEGATIF|CIMR|Médecin|DM004
+5|Chafik|Yassine|PL098765|Tanger Centre Ville n21|0676543210|yassine.chafik@example.com|default_pfp.png|1977-02-12|Homme|O_POSITIF|CNSS|Comptable|DM005
+6|Bensalem|Imane|ZT123456|Agadir Talborjt n33|0633210098|imane.bensalem@example.com|default_pfp.png|1995-09-18|Femme|A_NEGATIF|CNAM|Avocate|DM006
+7|El Khatib|Yassir|ZT654321|Rabat Agdal n50|0612345679|yassir.elkhatib@example.com|default_pfp.png|2015-04-25|Homme|AB_POSITIF|CNSS|Architecte|DM007
+8|Lahmar|Sara|GK983721|Casablanca Anfa n12|0698765432|sara.lahmar@example.com|default_pfp.png|1988-08-14|Femme|O_POSITIF|CNOPS|Professeur|DM008
+9|Benjelloun|Tariq|YJ294765|Marrakech Menara n18|0612345690|tariq.benjelloun@example.com|default_pfp.png|1982-01-20|Homme|A_POSITIF|CIMR|Médecin|DM009
+10|Meziane|Khadija|GH671234|Fès Boulevard n7|0687543211|khadija.meziane@example.com|default_pfp.png|1993-12-05|Femme|B_NEGATIF|CNAM|Chercheur|DM010
+11|Khabbaz|Mounir|JM987654|Tanger Bord de Mer n4|0676549876|mounir.khabbaz@example.com|default_pfp.png|1980-02-22|Homme|O_NEGATIF|CNSS|Chef de projet|DM011
+12|Lachhab|Nadia|XJ345678|Agadir Inezgane n22|0698765431|nadia.lachhab@example.com|default_pfp.png|1991-11-30|Femme|A_POSITIF|CNOPS|Ingénieure|DM012
+13|Rahal|Ali|KN789023|Casablanca Sidi Maarouf n8|0619988776|ali.rahal@example.com|default_pfp.png|2014-07-18|Homme|AB_NEGATIF|CNSS|Journaliste|DM013
+14|Amrani|Rachida|LK456789|Marrakech Menara n10|0676543212|rachida.amrani@example.com|default_pfp.png|1990-09-03|Femme|B_POSITIF|CIMR|Directrice|DM014
+15|Brahimi|Ahmed|PQ563849|Rabat Hay Riad n30|0633210065|ahmed.brahimi@example.com|default_pfp.png|1987-12-02|Homme|O_POSITIF|CNAM|Commercial|DM015
+16|Fassi|Zineb|NS932874|Tanger Beni Makada n15|0612345689|zineb.fassi@example.com|default_pfp.png|1994-05-21|Femme|A_NEGATIF|CNOPS|Enseignante|DM016
+17|Rami|Omar|JT193847|Fès Boulevard Hassan II n20|0678932145|omar.rami@example.com|default_pfp.png|1989-09-14|Homme|AB_POSITIF|CNSS|Médecin|DM017
+19|Bachir|Sami|ZX839562|Marrakech Targa n40|0687654321|sami.bachir@example.com|default_pfp.png|1984-06-10|Homme|A_POSITIF|CIMR|Développeur|DM019

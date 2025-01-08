@@ -1,9 +1,6 @@
 package ma.CabinetDentaire.presentation.view;
 
-import ma.CabinetDentaire.presentation.view.palette.buttons.MyButton;
-import ma.CabinetDentaire.presentation.view.palette.panels.NavPanel;
 import ma.CabinetDentaire.presentation.view.palette.panels.UserInfoPanel;
-import ma.CabinetDentaire.presentation.view.palette.panels.links.NavLink;
 import ma.CabinetDentaire.presentation.view.themes.Theme;
 
 import javax.swing.*;
@@ -18,16 +15,16 @@ public class MainView extends JFrame {
         leftPanel = new JPanel();
         rightPanel = new JPanel();
         userInfoPanel = new UserInfoPanel(currentTheme);
-        NavPanel navPanel = new NavPanel(currentTheme,rightPanel);
+        NavPanel navPanel = new NavPanel(currentTheme,rightPanel,this);
 
         leftPanel.setBackground(currentTheme.bgColor());
         leftPanel.setPreferredSize(new Dimension(300, getHeight()));
         leftPanel.setBorder(BorderFactory.createEmptyBorder(60, 0, 0, 0));
         leftPanel.add(userInfoPanel);
         leftPanel.add(navPanel);
-
         rightPanel.setBackground(currentTheme.darkBgColor());
         rightPanel.setLayout(new BorderLayout());
+        rightPanel.add(new DashboardPanel(currentTheme));
 
         add(leftPanel, BorderLayout.WEST);
         add(rightPanel, BorderLayout.CENTER);

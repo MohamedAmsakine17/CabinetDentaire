@@ -11,9 +11,11 @@ import java.awt.event.FocusListener;
 
 public class TextInputField extends JTextField {
     private Theme currentTheme;
+    private int fontSize;
 
     public TextInputField(Theme currentTheme, String placeHolder, int fontSize) {
         this.currentTheme = currentTheme;
+        this.fontSize = fontSize;
 
         setFont(new Font("Arial", Font.PLAIN, fontSize));
         setBackground(currentTheme.fieldsBgColor());
@@ -28,17 +30,21 @@ public class TextInputField extends JTextField {
             public void focusGained(FocusEvent e) {
                 if (getText().equals(placeHolder)) {
                     setText("");
-                    setForeground(Color.BLACK); // Change text color to normal
+                    //setForeground(Color.BLACK); // Change text color to normal
                 }
             }
 
             @Override
             public void focusLost(FocusEvent e) {
                 if (getText().isEmpty()) {
-                    setForeground(Color.GRAY); // Placeholder color
+                    //setForeground(Color.GRAY); // Placeholder color
                     setText(placeHolder);
                 }
             }
         });
+    }
+
+    public void setFontBold(int bold){
+        setFont(new Font("Arial", bold, fontSize));
     }
 }

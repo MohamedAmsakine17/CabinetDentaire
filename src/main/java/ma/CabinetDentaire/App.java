@@ -1,5 +1,6 @@
 package ma.CabinetDentaire;
 
+import ma.CabinetDentaire.config.AppFactory;
 import ma.CabinetDentaire.presentation.view.LoginView;
 import ma.CabinetDentaire.presentation.view.themes.ThemeLight;
 

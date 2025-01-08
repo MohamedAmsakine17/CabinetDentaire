@@ -1,0 +1,12 @@
+private Long id;
+    private Patient patient;
+    private String numeroDossier;
+    private LocalDate dateCreation;
+    private Dentiste dentiste;
+    private StatutPaiment statutPaiment;
+    private SituationFinanciere situationFinanciere;
+    private List<RendezVous> rdvs;
+    private List<Ordonnance> ordonnances;
+    private List<Consultation> consultations;
+
+ID|PATIENT_ID|NUMERO_DOSSIER|DATE_CREATION|DENTIST_ID|STATIT_PAIMENT|SITUATION_FINANCIERE|RDV|OR

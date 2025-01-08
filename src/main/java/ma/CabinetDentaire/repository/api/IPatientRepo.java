@@ -11,4 +11,6 @@ public interface IPatientRepo  extends CRUDRepository<Patient,Long> {
     Patient findByCIN(String cin)           throws DaoException;
     List<Patient> findByCINLike(String keyword) throws DaoException;
     List<Patient> findBySexe(Sexe sexe)     throws DaoException;
+    List<Patient> findUnderAge(int age) throws DaoException;
+    List<Patient> findByNameLike(String keyword) throws DaoException;
 }

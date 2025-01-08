@@ -38,7 +38,7 @@ public class Utilisateur extends Personne {
                        LocalDate dateDeCreation, LocalDate dateDernierConnexion, LocalDate dateDeModification,long id, String cin, String nom, String prenom, String adresse, String telephone, String email,
                        String photoDeProfile, LocalDate dataDeNaissance, Sexe sexe) {
 
-        super(id, nom, prenom, adresse, telephone, email, photoDeProfile, dataDeNaissance, sexe);
+        super(id, nom, prenom,cin, adresse, telephone, email, photoDeProfile, dataDeNaissance, sexe);
         this.username = username;
         this.password = password;
         this.dateDeCreation = dateDeCreation;
@@ -49,7 +49,15 @@ public class Utilisateur extends Personne {
     public void ajouterRole(Role role){
         roles.add(role);
     }
+
     public boolean aPrivileger(String privilege){
+        for (Role role : getRoles()) {
+            for (String priv: role.getPrivileges()){
+                if(priv == privilege){
+                    return true;
+                }
+            }
+        }
         return false;
     }
 

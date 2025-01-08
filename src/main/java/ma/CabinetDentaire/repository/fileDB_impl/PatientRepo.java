@@ -1,6 +1,9 @@
 package ma.CabinetDentaire.repository.fileDB_impl;
 
+import ma.CabinetDentaire.entities.DossierMedicale;
 import ma.CabinetDentaire.entities.Patient;
+import ma.CabinetDentaire.entities.enums.GroupeSanguin;
+import ma.CabinetDentaire.entities.enums.Mutuelle;
 import ma.CabinetDentaire.entities.enums.Sexe;
 import ma.CabinetDentaire.repository.api.IPatientRepo;
 import ma.CabinetDentaire.repository.exceptions.DaoException;
@@ -9,8 +12,11 @@ import java.io.*;
 import java.nio.Buffer;
 import java.nio.file.Files;
 import java.nio.file.StandardOpenOption;
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.StringTokenizer;
 import java.util.stream.Collectors;
 
@@ -21,23 +27,53 @@ public class PatientRepo implements IPatientRepo {
     private Patient mapToPatient(String fileLine) throws DaoException {
        try{
            //ID|NOM|PRENOM|EMAIL|CIN|SEXE
+           //ID|NOM|PRENOM|CIN|ADRESSE|TELEPHONE|EMAIL|PFP|DATA_NAISSANCE|SEXE|GROUP_SANGUIN|MUTUELLE|PROFESSION|DOSSIERMEDICALE
+
            StringTokenizer st = new StringTokenizer(fileLine, "\\|");
 
            String value = st.nextToken();
            Long id = Long.parseLong(value);
            value = st.nextToken();
-           String nom = (value.equals("null") ? null : value);
+           String nom = (value.equals("null")? null : value);
            value = st.nextToken();
-           String prenom = (value.equals("null") ? null : value);
+           String prenom = (value.equals("null")? null : value);
            value = st.nextToken();
-           String email = (value.equals("null") ? null :value);
+           String cin = (value.equals("null")? null : value);
            value = st.nextToken();
-           String cin = (value.equals("null") ? null : value);
+           String adresse = (value.equals("null")? null : value);
+           value = st.nextToken();
+           String telephone = (value.equals("null")? null : value);
+           value = st.nextToken();
+           String email = (value.equals("null")? null : value);
+           value = st.nextToken();
+           String pfp = (value.equals("null")? null : value);
+           value = st.nextToken();
+           LocalDate data_de_naissance = LocalDate.parse(value);
            value = st.nextToken();
            Sexe sexe = (value.equals("null") ? null : (value.equals("Homme") ? Sexe.HOMME : Sexe.FEMME ));;
+           value = st.nextToken();
+           GroupeSanguin groupeSanguin = (value.equals("null") ? null :
+                   (value.equals("A_NEGATIF") ? GroupeSanguin.A_NEGATIF
+                           : value.equals("AB_NEGATIF") ? GroupeSanguin.AB_NEGATIF
+                           : value.equals("B_NEGATIF") ? GroupeSanguin.B_NEGATIF
+                           : value.equals("O_NEGATIF") ? GroupeSanguin.O_NEGATIF
+                           : value.equals("AB_POSITIF") ? GroupeSanguin.AB_POSITIF
+                           : value.equals("A_POSITIF") ? GroupeSanguin.A_POSITIF
+                           : value.equals("B_POSITIF") ? GroupeSanguin.B_POSITIF
+                           : GroupeSanguin.O_POSITIF));;
+           value = st.nextToken();
+           Mutuelle mutuelle = (value.equals("null") ? null :
+                   (value.equals("CIMR") ? Mutuelle.CIMR
+                           : value.equals("CNAM") ? Mutuelle.CNAM
+                           : value.equals("CNSS") ? Mutuelle.CNSS
+                           : Mutuelle.CNOPS));
+           value = st.nextToken();
+           String profession = (value.equals("null")? null : value);
+           // khas ndiro fichier mn b3d txt dyalom
+           value = st.nextToken();
+           DossierMedicale dossierMedicale = new DossierMedicale();
 
-           Patient patient = new Patient(id,nom,prenom,email,cin,sexe);
-           return patient;
+           return new Patient(id,nom,prenom,cin,adresse,telephone,email,pfp,data_de_naissance,sexe,groupeSanguin,mutuelle,profession,dossierMedicale);
        } catch (NumberFormatException e){
            throw new DaoException(e);
        }
@@ -82,6 +118,22 @@ public class PatientRepo implements IPatientRepo {
         return findAll().
                 stream().
                 filter(patient -> patient.getSexe().equals(sexe)).
+                toList();
+    }
+
+    @Override
+    public List<Patient> findUnderAge(int age) throws DaoException {
+        return findAll().
+                stream().
+                filter(patient -> Period.between(patient.getDataDeNaissance(), LocalDate.now()).getYears() <= age).
+                toList();
+    }
+
+    @Override
+    public List<Patient> findByNameLike(String keyword) throws DaoException {
+        return findAll().
+                stream().
+                filter(patient -> (patient.getNom() + patient.getPrenom()).toLowerCase().contains(keyword)).
                 toList();
     }
 
@@ -201,17 +253,5 @@ public class PatientRepo implements IPatientRepo {
             throw new DaoException("Probleme tech dans la suppression du patient");
         if(!isDeleted)
             throw new DaoException("Patient n'" + id + " ");
-    }
-
-    public static void main(String[] args) throws DaoException {
-        //new PatientRepo().findAll().forEach(System.out::println);
-        //new PatientRepo().findBySexe(Sexe.HOMME).forEach(System.out::println);
-        //new PatientRepo().findByCINLike("A6").forEach(System.out::println);
-
-        var p = new Patient(null, "Jahili","Ayoub" , "AyoubJahil@gmail.com","A6789",Sexe.HOMME);
-        new PatientRepo().save(p);
-
-        new PatientRepo().findAll().forEach(System.out::println);
-        new PatientRepo().update(new Patient(7L, "amsa","koko" , "koko@gmail.com","LB2432",Sexe.FEMME));
     }
 }

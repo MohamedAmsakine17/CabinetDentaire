@@ -7,17 +7,33 @@ import java.awt.*;
 
 public class MyLabel extends JLabel {
     private Theme currentTheme;
+    private int isBold;
+    private String text;
+    private int fontSize;
 
-    public MyLabel(Theme currentTheme, String text, int fontSize, int isBold) {
-        this.currentTheme = currentTheme;
+    private String fontName;
 
+    private void _init(){
         setText(text);
         setForeground(currentTheme.fontColor());
-        setFont(new Font("Arial", isBold, fontSize));
+        setFont(new Font(fontName, isBold, fontSize));
         setAlignmentX(Component.CENTER_ALIGNMENT);
     }
 
-    public void SetText(String text) {
-        setText(text);
+    public MyLabel(Theme currentTheme, String text, int fontSize, int isBold) {
+        this.currentTheme = currentTheme;
+        this.isBold = isBold;
+        this.text = text;
+        this.fontSize = fontSize;
+        this.fontName = "Arial";
+        _init();
+    }
+
+    public void changeTextSize(int newsize){
+        setFont(new Font(fontName, isBold, newsize));
+    }
+
+    public void changeColor(Color color){
+        setForeground(color);
     }
 }

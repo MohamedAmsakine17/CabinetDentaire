@@ -56,12 +56,11 @@ public class Personne {
         this.cin = cin;
         this.sexe = sexe;
     }
-
-
-    public Personne(Long id, String nom, String prenom, String adresse, String telephone, String email, String photoDeProfile, LocalDate dataDeNaissance ,Sexe sexe) {
+    public Personne(Long id, String nom, String prenom, String cin ,String adresse, String telephone, String email, String photoDeProfile, LocalDate dataDeNaissance ,Sexe sexe) {
         this.id = id;
         this.nom = nom;
         this.prenom = prenom;
+        this.cin = cin;
         this.adresse = adresse;
         this.telephone = telephone;
         this.email = email;

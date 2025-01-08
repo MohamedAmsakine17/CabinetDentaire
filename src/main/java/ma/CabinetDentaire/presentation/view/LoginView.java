@@ -6,7 +6,8 @@ import ma.CabinetDentaire.presentation.view.palette.fields.PasswordInputField;
 import ma.CabinetDentaire.presentation.view.palette.labels.MyLabel;
 import ma.CabinetDentaire.presentation.view.themes.Theme;
 import ma.CabinetDentaire.presentation.view.palette.fields.TextInputField;
-import ma.CabinetDentaire.repository.db_files.UserDAO;
+import ma.CabinetDentaire.repository.exceptions.DaoException;
+import ma.CabinetDentaire.repository.fileDB_impl.UtilisateurDAO;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,7 +17,7 @@ import java.awt.event.ActionListener;
 @Data
 public class LoginView extends JFrame {
     private Theme currentTheme;
-    private UserDAO userDAO;
+    private UtilisateurDAO userDAO;
 
     private JPanel mainPanel, leftPanel, rightPanel;
     private JSplitPane splitPane;
@@ -28,7 +29,7 @@ public class LoginView extends JFrame {
         splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, leftPanel, rightPanel);
 
         rightPanel.setLayout(new BoxLayout(rightPanel, BoxLayout.Y_AXIS));
-        rightPanel.setBorder(BorderFactory.createEmptyBorder(165, 50, 165, 50));
+        rightPanel.setBorder(BorderFactory.createEmptyBorder(150, 50, 150, 50));
         rightPanel.setBackground(currentTheme.bgColor());
         addForm(rightPanel);
 
@@ -55,33 +56,50 @@ public class LoginView extends JFrame {
     }
 
     private void addForm(JPanel panel) {
-        MyLabel title = new MyLabel(currentTheme,"Welcome to Pretty-Smile",30,1);
+        MyLabel title = new MyLabel(currentTheme,"Bienvenue chez Pretty-Smile",28,1);
         panel.add(title);
 
         panel.add(Box.createRigidArea(new Dimension(0, 10)));
 
-        MyLabel smallTitle = new MyLabel(currentTheme,"Your trusted partner in dental practice management",14,0);
+        MyLabel smallTitle = new MyLabel(currentTheme,"Votre partenaire fiable en gestion de cabinet dentaire",14,0);
         panel.add(smallTitle);
 
         panel.add(Box.createRigidArea(new Dimension(0, 40))); // Space between title and input fields
 
+        JPanel inputsPanel = new JPanel(new GridLayout(3,1,0,15));
+        inputsPanel.setOpaque(false);
+
         TextInputField usernameInputField = new TextInputField(currentTheme,"Username",20);
         usernameInputField.setPreferredSize(new Dimension(400, 70));  // Set width and height explicitly
-        panel.add(usernameInputField);
-
-        panel.add(Box.createRigidArea(new Dimension(0, 20))); // Space between title and input fields
+        inputsPanel.add(usernameInputField);
 
         PasswordInputField passwordInputField = new PasswordInputField(currentTheme, "Password",20);
         passwordInputField.setPreferredSize(new Dimension(400, 70));
-        panel.add(passwordInputField);
-
-        panel.add(Box.createRigidArea(new Dimension(0, 40))); // Space between title and input fields
+        inputsPanel.add(passwordInputField);
 
 
-        MyButton loginBtn = new MyButton(currentTheme,"Login", currentTheme.greenColor(), new Color(64,174,116));
-        panel.add(loginBtn);
+        JCheckBox checkBox = new JCheckBox("Se souvenir de moi");
+        checkBox.setOpaque(false);
+        checkBox.setBounds(50, 50, 200, 30);
+        checkBox.setFont(new Font("Arial", Font.PLAIN, 14)); // Font size 14
+        checkBox.setFocusPainted(false);
+        inputsPanel.add(checkBox);
+
+        panel.add(inputsPanel);
+
 
         panel.add(Box.createRigidArea(new Dimension(0, 20))); // Space between title and input fields
+
+        JPanel buttonsPanel = new JPanel(new BorderLayout());
+        buttonsPanel.setOpaque(false);
+
+        MyButton loginBtn = new MyButton(currentTheme,"Login", null, currentTheme.greenColor(), currentTheme.greenHoverColor());
+        buttonsPanel.add(loginBtn, BorderLayout.WEST);
+
+        panel.add(buttonsPanel, BorderLayout.SOUTH);
+
+        panel.add(Box.createRigidArea(new Dimension(0, 20))); // Space between title and input fields
+
 
         MyLabel messageText = new MyLabel(currentTheme,"      ",16,1);
         panel.add(messageText);
@@ -96,6 +114,16 @@ public class LoginView extends JFrame {
                     messageText.setText("Login successful!");
                     messageText.setForeground(currentTheme.greenColor());
 
+                    if(checkBox.isSelected()){
+                        System.out.print("Hello");
+
+                        try {
+                            userDAO.saveSession();
+                        } catch (DaoException ex) {
+                            throw new RuntimeException(ex);
+                        }
+                    }
+
                     Timer timer = new Timer(750, new ActionListener() {
                         @Override
                         public void actionPerformed(ActionEvent e) {
@@ -103,6 +131,7 @@ public class LoginView extends JFrame {
                             new MainView(currentTheme);
                         }
                     });
+
                     timer.setRepeats(false);
                     timer.start();
                 } else {
@@ -118,15 +147,19 @@ public class LoginView extends JFrame {
 
     public LoginView(Theme currentTheme) {
         this.currentTheme = currentTheme;
-        this.userDAO = new UserDAO();
+        this.userDAO = new UtilisateurDAO();
 
-        setTitle("Login");
-        setSize(1000, 700);
-        setResizable(false);
-        setLocationRelativeTo(null);
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setUndecorated(true);
-        _init();
-        setVisible(true);
+        if(userDAO.isSessionSaved()){
+            new MainView(currentTheme);
+        } else {
+            setTitle("Login");
+            setSize(1000, 700);
+            setResizable(false);
+            setLocationRelativeTo(null);
+            setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            setUndecorated(true);
+            _init();
+            setVisible(true);
+        }
     }
 }
