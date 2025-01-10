@@ -24,7 +24,7 @@ public class MainView extends JFrame {
         leftPanel.add(navPanel);
         rightPanel.setBackground(currentTheme.darkBgColor());
         rightPanel.setLayout(new BorderLayout());
-        rightPanel.add(new DashboardPanel(currentTheme));
+        rightPanel.add(new DashboardView(currentTheme));
 
         add(leftPanel, BorderLayout.WEST);
         add(rightPanel, BorderLayout.CENTER);

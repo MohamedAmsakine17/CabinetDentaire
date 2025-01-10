@@ -31,7 +31,7 @@ public class NavPanel extends JPanel {
         dashboard.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
                 updateRightPanel();
-                rightPanel.add(new DashboardPanel(currentTheme));
+                rightPanel.add(new DashboardView(currentTheme));
             }
         });
 

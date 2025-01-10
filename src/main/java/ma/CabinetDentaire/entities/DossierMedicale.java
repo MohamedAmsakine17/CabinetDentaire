@@ -16,7 +16,7 @@ public class DossierMedicale {
     private List<RendezVous> rdvs;
     private List<Ordonnance> ordonnances;
     private List<Consultation> consultations;
-
+    // ID|PATIENT_ID|NUMERO_DOSSIER|DATE_CREATION|DENTIST_ID|Statut_Paiment
     public DossierMedicale() {}
     public DossierMedicale(Long id, Patient patient, String numeroDossier, LocalDate dateCreation, Dentiste dentiste, StatutPaiment statutPaiment, SituationFinanciere situationFinanciere) {
         this.id = id;
@@ -26,6 +26,14 @@ public class DossierMedicale {
         this.dentiste = dentiste;
         this.statutPaiment = statutPaiment;
         this.situationFinanciere = situationFinanciere;
+    }
+    public DossierMedicale(Long id, Patient patient, String numeroDossier, LocalDate dateCreation, Dentiste dentiste, StatutPaiment statutPaiment) {
+        this.id = id;
+        this.patient = patient;
+        this.numeroDossier = numeroDossier;
+        this.dateCreation = dateCreation;
+        this.dentiste = dentiste;
+        this.statutPaiment = statutPaiment;
     }
 
     public Long getId() {

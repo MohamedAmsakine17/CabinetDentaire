@@ -7,7 +7,7 @@ import ma.CabinetDentaire.presentation.view.themes.Theme;
 import javax.swing.*;
 import java.awt.*;
 
-public class DashboardPanel extends JPanel {
+public class DashboardView extends JPanel {
     private Theme currentTheme;
 
     private void _init(){
@@ -22,7 +22,7 @@ public class DashboardPanel extends JPanel {
         add(header, BorderLayout.AFTER_LAST_LINE);
     }
 
-    public DashboardPanel(Theme currentTheme) {
+    public DashboardView(Theme currentTheme) {
         this.currentTheme = currentTheme;
         _init();
     }
