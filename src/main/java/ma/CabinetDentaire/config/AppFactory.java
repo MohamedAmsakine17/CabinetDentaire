@@ -3,6 +3,7 @@ package ma.CabinetDentaire.config;
 import ma.CabinetDentaire.presentation.controller.PatientController;
 import ma.CabinetDentaire.presentation.view.themes.Theme;
 import ma.CabinetDentaire.presentation.view.themes.ThemeLight;
+import ma.CabinetDentaire.repository.fileDB_impl.DossierMedicalRepo;
 import ma.CabinetDentaire.repository.fileDB_impl.PatientRepo;
 import ma.CabinetDentaire.repository.fileDB_impl.UtilisateurDAO;
 import ma.CabinetDentaire.service.PatientService;
@@ -14,6 +15,7 @@ public class AppFactory {
     static PatientService patientService;
     static PatientController patientController;
 
+    static DossierMedicalRepo dossierMedicalRepo;
 
     static UtilisateurDAO utilisateurDAO;
 
@@ -21,8 +23,16 @@ public class AppFactory {
         currentTheme = new ThemeLight();
 
         patientRepo = new PatientRepo();
-        patientService =  new PatientService(patientRepo);
+        dossierMedicalRepo = new DossierMedicalRepo();
+
+        patientService =  new PatientService(patientRepo,dossierMedicalRepo);
         patientController = new PatientController(currentTheme,patientService);
+
+        dossierMedicalRepo.setPatientRepo(patientRepo);
+        //dossierMedicalRepo = new DossierMedicalRepo();
+        //dossierMedicalRepo.setPatientRepo(patientRepo);
+
+        //patientRepo.setDossierMedicalRepo(dossierMedicalRepo);
 
         utilisateurDAO = new UtilisateurDAO();
     }

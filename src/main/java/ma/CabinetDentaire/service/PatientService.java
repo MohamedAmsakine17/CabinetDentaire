@@ -1,18 +1,24 @@
 package ma.CabinetDentaire.service;
 
+import ma.CabinetDentaire.entities.DossierMedicale;
 import ma.CabinetDentaire.entities.Patient;
 import ma.CabinetDentaire.entities.enums.Sexe;
+import ma.CabinetDentaire.entities.enums.StatutPaiment;
+import ma.CabinetDentaire.repository.api.IDossierMedicalRepo;
 import ma.CabinetDentaire.repository.api.IPatientRepo;
 import ma.CabinetDentaire.repository.exceptions.DaoException;
 import ma.CabinetDentaire.service.exceptions.PatientException;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public class PatientService implements IPatientService {
     private IPatientRepo patientRepo;
+    private IDossierMedicalRepo dossierMedicalRepo;
 
-    public PatientService(IPatientRepo patientRepo) {
+    public PatientService(IPatientRepo patientRepo, IDossierMedicalRepo dossierMedicalRepo) {
         this.patientRepo = patientRepo;
+        this.dossierMedicalRepo = dossierMedicalRepo;
     }
 
     @Override
@@ -54,11 +60,11 @@ public class PatientService implements IPatientService {
     @Override
     public Patient createPatient(Patient patient) throws PatientException {
         try{
-            return patientRepo.save(patient);
+            Patient newPatient = patientRepo.save(patient);
+            dossierMedicalRepo.save(new DossierMedicale(0L,newPatient, LocalDate.now(), StatutPaiment.EN_ATTENTE));
+            return newPatient;
         } catch (DaoException e) {
             throw new RuntimeException(e);
         }
     }
-
-
 }

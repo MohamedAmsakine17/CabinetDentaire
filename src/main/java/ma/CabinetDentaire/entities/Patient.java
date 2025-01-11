@@ -12,7 +12,6 @@ public class Patient extends  Personne{
     Mutuelle mutuelle;
     List<HistoriqueMedicale> historiqueMedicale;
     String profession;
-    DossierMedicale dossierMedicale;
 
     public Patient() {super();}
     public Patient(Long id, String nom, String prenom , String email, String cin, Sexe sexe) {
@@ -20,13 +19,13 @@ public class Patient extends  Personne{
     }
     public Patient(Long id, String nom, String prenom,String cin, String adresse, String telephone,
                    String email, String photoDeProfile, LocalDate dataDeNaissance , Sexe sexe,
-                   GroupeSanguin groupeSanguin,Mutuelle mutuelle, String profession, DossierMedicale dossierMedicale) {
+                   GroupeSanguin groupeSanguin,Mutuelle mutuelle, String profession) {
         super(id,nom,prenom,cin,adresse,telephone,email,photoDeProfile,dataDeNaissance,sexe);
         this.groupeSanguin = groupeSanguin;
         this.mutuelle = mutuelle;
         this.profession = profession;
-        this.dossierMedicale = dossierMedicale;
     }
+
 
     public GroupeSanguin getGroupeSanguin() { return groupeSanguin; }
 
@@ -39,10 +38,6 @@ public class Patient extends  Personne{
     public String getProfession() { return profession; }
 
     public void setProfession(String profession) { this.profession = profession; }
-
-    public DossierMedicale getDossierMedicale() { return dossierMedicale; }
-
-    public void setDossierMedicale(DossierMedicale dossierMedicale) { this.dossierMedicale = dossierMedicale; }
 
     public List<HistoriqueMedicale> getHistoriqueMedicale() { return historiqueMedicale; }
 

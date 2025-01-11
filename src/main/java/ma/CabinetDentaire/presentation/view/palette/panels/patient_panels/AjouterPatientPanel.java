@@ -1,6 +1,8 @@
 package ma.CabinetDentaire.presentation.view.palette.panels.patient_panels;
 
 import ma.CabinetDentaire.config.AppFactory;
+import ma.CabinetDentaire.entities.enums.Mutuelle;
+import ma.CabinetDentaire.entities.enums.Sexe;
 import ma.CabinetDentaire.presentation.view.PatientView;
 import ma.CabinetDentaire.presentation.view.palette.buttons.MyButton;
 import ma.CabinetDentaire.presentation.view.palette.fields.TextInputField;
@@ -19,6 +21,10 @@ import java.awt.event.MouseEvent;
 import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
+import java.time.LocalDate;
 
 public class AjouterPatientPanel extends JPanel {
     private Theme currentTheme;
@@ -34,9 +40,19 @@ public class AjouterPatientPanel extends JPanel {
     public String getTelephone(){return telephoneFormGroup.getInputField().getText();}
     public String getAddress(){return addressFormGroup.getInputField().getText();}
     public String getCin(){return cinFormGroup.getInputField().getText();}
-    public String getSexe(){return (String) sexeFormGroup.getSelectField().getSelectedItem();}
-    public String getAssurance(){return (String) assuranceFormGroup.getSelectField().getSelectedItem();}
-    public String getDateNaissance(){return dateNaissanceFormGroup.getInputField().getText();}
+    public Sexe getSexe(){
+        String value = (String) sexeFormGroup.getSelectField().getSelectedItem();
+        return value.equals("Homme") ? Sexe.HOMME : Sexe.FEMME;
+    }
+    public Mutuelle getAssurance(){
+        String value = ((String) assuranceFormGroup.getSelectField().getSelectedItem()) ;
+        return value.equals("CIMR") ? Mutuelle.CIMR
+                : value.equals("CNAM") ? Mutuelle.CNAM
+                : value.equals("CNSS") ? Mutuelle.CNSS
+                : Mutuelle.CNOPS;
+    }
+    public LocalDate getDateNaissance(){return LocalDate.parse(dateNaissanceFormGroup.getInputField().getText());}
+    public String getPfpPath(){return getNom() + getCin() + ".png";}
 
     private void _init(){
         setLayout(new BorderLayout());
@@ -82,39 +98,36 @@ public class AjouterPatientPanel extends JPanel {
                         pfplabel.setPreferredSize(new Dimension(250,150));
                         pfplabel.setIcon(new ImageIcon(img));
                         pfplabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
                         pfplabel.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                JFileChooser fileChooser = new JFileChooser();
-                fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+                            @Override
+                            public void mouseClicked(MouseEvent e) {
+                                JFileChooser fileChooser = new JFileChooser();
+                                fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
 
-                // Get the parent window for the file chooser dialog
-                Component parent = SwingUtilities.getWindowAncestor(AjouterPatientPanel.this);
-                int result = fileChooser.showOpenDialog(parent);
+                                Component parent = SwingUtilities.getWindowAncestor(AjouterPatientPanel.this);
+                                int result = fileChooser.showOpenDialog(parent);
+                                if (result == JFileChooser.APPROVE_OPTION) {
+                                    File selectedFile = fileChooser.getSelectedFile();
+                                    try {
+                                        ImageIcon uploadedIcon = new ImageIcon(selectedFile.getAbsolutePath());
+                                        Image updatedImg = uploadedIcon.getImage().getScaledInstance(128,128, Image.SCALE_SMOOTH);
+                                        pfplabel.setIcon(new ImageIcon(updatedImg));
 
-                if (result == JFileChooser.APPROVE_OPTION) {
-                    File selectedFile = fileChooser.getSelectedFile();
-                    try {
-                        // Load and display the selected image
-                        ImageIcon uploadedIcon = new ImageIcon(selectedFile.getAbsolutePath());
-                        Image updatedImg = uploadedIcon.getImage().getScaledInstance(128,128, Image.SCALE_SMOOTH);
-                        pfplabel.setIcon(new ImageIcon(updatedImg));
-
-                        // Optionally save the image to patient_pfp directory
-                        File outputDir = new File("src/main/resources/images/patient_pfp");
-                        if (!outputDir.exists()) outputDir.mkdirs();
-                        File outputFile = new File(outputDir, "uploaded_picture.jpg");
-                        BufferedImage uploadedImage = ImageIO.read(selectedFile);
-                        ImageIO.write(uploadedImage, "jpg", outputFile);
-                        System.out.println("Image saved to: " + outputFile.getAbsolutePath());
-                    } catch (Exception ex) {
-                        ex.printStackTrace();
-                        JOptionPane.showMessageDialog(parent, "Failed to upload image: " + ex.getMessage(),
-                                "Error", JOptionPane.ERROR_MESSAGE);
-                    }
-                }
-            }
-        });
+                                        File outputDir = new File("src/main/resources/images/patient_pfp");
+                                        if (!outputDir.exists()) outputDir.mkdirs();
+                                        File outputFile = new File(outputDir, "uploaded_picture.jpg");
+                                        BufferedImage uploadedImage = ImageIO.read(selectedFile);
+                                        ImageIO.write(uploadedImage, "jpg", outputFile);
+                                        System.out.println("Image saved to: " + outputFile.getAbsolutePath());
+                                    } catch (Exception ex) {
+                                        ex.printStackTrace();
+                                        JOptionPane.showMessageDialog(parent, "Failed to upload image: " + ex.getMessage(),
+                                            "Error", JOptionPane.ERROR_MESSAGE);
+                                    }
+                                }
+                            }
+                        });
 
 
                     pfpPanel.add(pfplabel, BorderLayout.CENTER);
@@ -292,6 +305,30 @@ public class AjouterPatientPanel extends JPanel {
         });
     }
 
+    private void updatePicturName(){
+        // Source file
+        File sourceFile = new File("src/main/resources/images/patient_pfp/uploaded_picture.jpg");
+
+        // Destination directory
+        File destinationDir = new File("src/main/resources/images/patient_pfp");
+        if (!destinationDir.exists()) {
+            destinationDir.mkdirs(); // Create directory if it doesn't exist
+        }
+
+        // New file name
+        String newFileName = getPfpPath();
+        File destinationFile = new File(destinationDir, newFileName);
+
+        try {
+            // Copy and rename the file
+            Files.copy(sourceFile.toPath(), destinationFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+            System.out.println("File copied to: " + destinationFile.getAbsolutePath());
+        } catch (IOException e) {
+            System.err.println("Failed to copy and rename the file: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
     private void ajouter(){
         if(nomFormGroup.getInputField().getText().isEmpty()) {
             errorMessageLabel.setText("Le nom est requis");
@@ -323,6 +360,8 @@ public class AjouterPatientPanel extends JPanel {
         }
 
         errorMessageLabel.setText("");
+        updatePicturName();
+        AppFactory.getPatientController().createPatient();
 
     }
 

@@ -1,13 +1,19 @@
 package ma.CabinetDentaire.presentation.controller;
 
 import ma.CabinetDentaire.entities.Patient;
+import ma.CabinetDentaire.entities.enums.GroupeSanguin;
+import ma.CabinetDentaire.entities.enums.Mutuelle;
 import ma.CabinetDentaire.entities.enums.Sexe;
 import ma.CabinetDentaire.presentation.controller.api.IPatientController;
 import ma.CabinetDentaire.presentation.view.themes.Theme;
 import ma.CabinetDentaire.presentation.view.PatientView;
 import ma.CabinetDentaire.service.IPatientService;
 import ma.CabinetDentaire.service.exceptions.PatientException;
+
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Locale;
+
 public class PatientController implements IPatientController {
 
     private Theme currentTheme;
@@ -47,13 +53,20 @@ public class PatientController implements IPatientController {
         //ID|NOM|PRENOM|CIN|ADRESSE|TELEPHONE|EMAIL|PFP|DATA_NAISSANCE|SEXE|GROUP_SANGUIN|MUTUELLE|PROFESSION|DOSSIERMEDICALE
         String nom = patientView.getAjouterPatientPanel().getNom();
         String prenom = patientView.getAjouterPatientPanel().getPrenom();
-        String email = patientView.getAjouterPatientPanel().getEmail();
         String cin = patientView.getAjouterPatientPanel().getCin();
-        String telephone = patientView.getAjouterPatientPanel().getTelephone();
-        String sexe = patientView.getAjouterPatientPanel().getSexe();
-        String assurance = patientView.getAjouterPatientPanel().getAssurance();
         String address = patientView.getAjouterPatientPanel().getAddress();
-        String dateNaissance = patientView.getAjouterPatientPanel().getDateNaissance();
+        String telephone = patientView.getAjouterPatientPanel().getTelephone();
+        String email = patientView.getAjouterPatientPanel().getEmail();
+        String pfp = patientView.getAjouterPatientPanel().getPfpPath();
+        LocalDate dateNaissance = patientView.getAjouterPatientPanel().getDateNaissance();
+        Sexe sexe = patientView.getAjouterPatientPanel().getSexe();
+        Mutuelle mutuelle = patientView.getAjouterPatientPanel().getAssurance();
+        GroupeSanguin groupeSanguin = GroupeSanguin.O_POSITIF;
+
+        Patient patient = new Patient(0L,nom,prenom,cin,address,telephone,email,pfp,dateNaissance,sexe,groupeSanguin,mutuelle,null);
+        patientService.createPatient(patient);
+
+        showAllPatients();
     }
 
 

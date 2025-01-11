@@ -5,6 +5,7 @@ import ma.CabinetDentaire.entities.Patient;
 import ma.CabinetDentaire.entities.enums.GroupeSanguin;
 import ma.CabinetDentaire.entities.enums.Mutuelle;
 import ma.CabinetDentaire.entities.enums.Sexe;
+import ma.CabinetDentaire.entities.enums.StatutPaiment;
 import ma.CabinetDentaire.repository.api.IPatientRepo;
 import ma.CabinetDentaire.repository.exceptions.DaoException;
 
@@ -69,30 +70,46 @@ public class PatientRepo implements IPatientRepo {
                            : Mutuelle.CNOPS));
            value = st.nextToken();
            String profession = (value.equals("null")? null : value);
-           // khas ndiro fichier mn b3d txt dyalom
-           value = st.nextToken();
-           DossierMedicale dossierMedicale = new DossierMedicale();
 
-           return new Patient(id,nom,prenom,cin,adresse,telephone,email,pfp,data_de_naissance,sexe,groupeSanguin,mutuelle,profession,dossierMedicale);
+           Patient patient = new Patient(id,nom,prenom,cin,adresse,telephone,email,pfp,data_de_naissance,sexe,groupeSanguin,mutuelle,profession);
+
+           return patient;
        } catch (NumberFormatException e){
            throw new DaoException(e);
        }
     }
 
-    private String mapToLine(Patient patient){
+    private String mapToLine(Patient patient) throws DaoException {
+        //ID|NOM|PRENOM|CIN|ADRESSE|TELEPHONE|EMAIL|PFP|DATA_NAISSANCE|SEXE|GROUP_SANGUIN|MUTUELLE|PROFESSION|DOSSIERMEDICALE
+
         Long id = patient.getId();
         String nom = patient.getNom();
         String prenom = patient.getPrenom();
-        String email = patient.getEmail();
         String cin = patient.getCin();
+        String adresse = patient.getAdresse();
+        String telephone = patient.getTelephone();
+        String email = patient.getEmail();
+        String pfp = patient.getPhotoDeProfile();
+        LocalDate data_de_naissance = patient.getDataDeNaissance();
         Sexe sexe = patient.getSexe();
+        GroupeSanguin groupeSanguin = patient.getGroupeSanguin();
+        Mutuelle mutuelle = patient.getMutuelle();
+        String profession = patient.getProfession();
+
 
         return id + "|" +
                 (nom    == null ? "null": nom)              + "|" +
                 (prenom == null ? "null" : prenom)          + "|" +
+                (cin  == null ? "null" : cin)               + "|" +
+                (adresse == null ? "null" : adresse)        + "|" +
+                (telephone == null ? "null" : telephone)    + "|" +
                 (email  == null ? "null" : email)           + "|" +
-                (cin    == null ? "null" : cin)             + "|" +
-                (sexe   == null ? "null" : sexe.toString()) +
+                (pfp == null ? "null" : pfp)                + "|" +
+                (data_de_naissance == null ? "null" : data_de_naissance.toString())  + "|" +
+                (sexe   == null ? "null" : (sexe.equals(Sexe.FEMME) ? "Femme" : "Homme")) + "|" +
+                (groupeSanguin == null ? "null" : groupeSanguin.toString()) + "|" +
+                (mutuelle == null ? "null" : mutuelle.toString()) + "|" +
+                (profession == null ? "null" : profession)   +
                 System.lineSeparator();
     }
 
@@ -172,7 +189,7 @@ public class PatientRepo implements IPatientRepo {
                                 mapToLine(element),
                                 StandardOpenOption.APPEND
             );
-            return null;
+            return element;
         } catch (IOException e) {
             throw new DaoException(e);
         }

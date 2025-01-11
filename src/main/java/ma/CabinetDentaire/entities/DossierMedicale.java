@@ -8,7 +8,6 @@ import java.util.List;
 public class DossierMedicale {
     private Long id;
     private Patient patient;
-    private String numeroDossier;
     private LocalDate dateCreation;
     private Dentiste dentiste;
     private StatutPaiment statutPaiment;
@@ -18,19 +17,17 @@ public class DossierMedicale {
     private List<Consultation> consultations;
     // ID|PATIENT_ID|NUMERO_DOSSIER|DATE_CREATION|DENTIST_ID|Statut_Paiment
     public DossierMedicale() {}
-    public DossierMedicale(Long id, Patient patient, String numeroDossier, LocalDate dateCreation, Dentiste dentiste, StatutPaiment statutPaiment, SituationFinanciere situationFinanciere) {
+    public DossierMedicale(Long id, Patient patient, LocalDate dateCreation, Dentiste dentiste, StatutPaiment statutPaiment, SituationFinanciere situationFinanciere) {
         this.id = id;
         this.patient = patient;
-        this.numeroDossier = numeroDossier;
         this.dateCreation = dateCreation;
         this.dentiste = dentiste;
         this.statutPaiment = statutPaiment;
         this.situationFinanciere = situationFinanciere;
     }
-    public DossierMedicale(Long id, Patient patient, String numeroDossier, LocalDate dateCreation, Dentiste dentiste, StatutPaiment statutPaiment) {
+    public DossierMedicale(Long id, Patient patient , LocalDate dateCreation, StatutPaiment statutPaiment) {
         this.id = id;
         this.patient = patient;
-        this.numeroDossier = numeroDossier;
         this.dateCreation = dateCreation;
         this.dentiste = dentiste;
         this.statutPaiment = statutPaiment;
@@ -52,13 +49,6 @@ public class DossierMedicale {
         this.patient = patient;
     }
 
-    public String getNumeroDossier() {
-        return numeroDossier;
-    }
-
-    public void setNumeroDossier(String numeroDossier) {
-        this.numeroDossier = numeroDossier;
-    }
 
     public LocalDate getDateCreation() {
         return dateCreation;
@@ -114,5 +104,15 @@ public class DossierMedicale {
 
     public void addConsultation(Consultation consultation) {
         this.consultations.add(consultation);
+    }
+
+    @Override
+    public String toString() {
+        return "DossierMedicale{" +
+                "id=" + id +
+                ", patient=" + patient +
+                ", dateCreation=" + dateCreation +
+                ", statutPaiment=" + statutPaiment +
+                '}';
     }
 }

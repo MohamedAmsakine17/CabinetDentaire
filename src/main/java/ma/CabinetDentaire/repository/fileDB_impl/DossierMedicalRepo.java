@@ -2,86 +2,136 @@ package ma.CabinetDentaire.repository.fileDB_impl;
 
 import ma.CabinetDentaire.entities.DossierMedicale;
 import ma.CabinetDentaire.entities.Patient;
-import ma.CabinetDentaire.entities.enums.GroupeSanguin;
-import ma.CabinetDentaire.entities.enums.Mutuelle;
-import ma.CabinetDentaire.entities.enums.Sexe;
+import ma.CabinetDentaire.entities.enums.StatutPaiment;
 import ma.CabinetDentaire.repository.api.IDossierMedicalRepo;
 import ma.CabinetDentaire.repository.exceptions.DaoException;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.StandardOpenOption;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
 public class DossierMedicalRepo implements IDossierMedicalRepo {
     private static final File DOSSIER_MEDICAL_FILE = new File("src/main/data/dossier_medical.txt");
+    private static PatientRepo patientRepo;
 
-    private Patient mapToPatient(String fileLine) throws DaoException {
+    public PatientRepo getPatientRepo() {
+        return patientRepo;
+    }
+
+    public void setPatientRepo(PatientRepo patientRepo) {
+        this.patientRepo = patientRepo;
+    }
+
+    private DossierMedicale mapToDossier(String fileLine) throws DaoException {
         try{
-            // ID|PATIENT_ID|NUMERO_DOSSIER|DATE_CREATION|DENTIST_ID
+            // ID|PATIENT_ID|DATE_CREATION|Statut_Paiment
             StringTokenizer st = new StringTokenizer(fileLine, "\\|");
 
             String value = st.nextToken();
             Long id = Long.parseLong(value);
+            // set patient
             value = st.nextToken();
             Long patientId = Long.parseLong(value);
-            value = st.nextToken();
-            String numeroDossier = (value.equals("null") ? null : value);
+            Patient patient = patientRepo.findById(patientId);
+
             value = st.nextToken();
             LocalDate dateCreation = LocalDate.parse(value);
+
+            // set dentist
+
             value = st.nextToken();
-            Long dentisetId = Long.parseLong(value);
-            return
-            //return new Patient(id,nom,prenom,cin,adresse,telephone,email,pfp,data_de_naissance,sexe,groupeSanguin,mutuelle,profession,dossierMedicale);
+            StatutPaiment statutPaiment = (value.equals("null") ? null :
+                    (value.equals("en_attente") ? StatutPaiment.EN_ATTENTE
+                            : value.equals("paye") ? StatutPaiment.PAYE
+                            : StatutPaiment.IMPAYE));
+
+            DossierMedicale dossierMedicale =  new DossierMedicale(id,patient,dateCreation,statutPaiment);
+
+            return dossierMedicale;
         } catch (NumberFormatException e){
             throw new DaoException(e);
         }
     }
 
-    private String mapToLine(Patient patient){
-        Long id = patient.getId();
-        String nom = patient.getNom();
-        String prenom = patient.getPrenom();
-        String email = patient.getEmail();
-        String cin = patient.getCin();
-        Sexe sexe = patient.getSexe();
+    private String mapToLine(DossierMedicale dossierMedicale){
+        // ID|PATIENT_ID|DATE_CREATION|Statut_Paiment
 
-        return id + "|" +
-                (nom    == null ? "null": nom)              + "|" +
-                (prenom == null ? "null" : prenom)          + "|" +
-                (email  == null ? "null" : email)           + "|" +
-                (cin    == null ? "null" : cin)             + "|" +
-                (sexe   == null ? "null" : sexe.toString()) +
-                System.lineSeparator();
-    }
+        Long id = dossierMedicale.getId();
+        Long patientId = dossierMedicale.getPatient().getId();
+        LocalDate dateCreation = dossierMedicale.getDateCreation();
+        StatutPaiment statutPaiment = dossierMedicale.getStatutPaiment();
 
-    @Override
-    public List findAll() throws DaoException {
-        return List.of();
-    }
-
-    @Override
-    public Object findById(Object o) throws DaoException {
-        return null;
-    }
-
-    @Override
-    public Object save(Object element) throws DaoException {
-        return null;
-    }
-
-    @Override
-    public void update(Object element) throws DaoException {
+        return id + "|" + patientId + "|" + dateCreation + "|" + statutPaiment + System.lineSeparator();
 
     }
 
     @Override
-    public void delete(Object element) throws DaoException {
+    public List<DossierMedicale> findAll() throws DaoException {
+        List<DossierMedicale> dossierMedicales = new ArrayList<>();
+        try(BufferedReader reader = new BufferedReader(new FileReader(DOSSIER_MEDICAL_FILE))){
+            reader.lines().skip(1).forEach(line->{
+                try {
+                    DossierMedicale dossierMedicale = mapToDossier(line);
+                    dossierMedicales.add(dossierMedicale);
+                } catch (DaoException e) {
+                    System.err.println(e.getMessage());
+                }
+            });
+            return dossierMedicales;
+        } catch (IOException e){
+            throw new DaoException(e);
+        }
+    }
+
+    @Override
+    public DossierMedicale findById(Long id) throws DaoException {
+        return findAll()
+                .stream()
+                .filter(dossierMedicale -> dossierMedicale.getId().equals(id))
+                .findFirst()
+                .orElseThrow(()->new DaoException("Aucun dossier trouvé ayant le n°" + id));
+    }
+
+    @Override
+    public DossierMedicale save(DossierMedicale element) throws DaoException {
+       try{
+            Long maxId = findAll().stream().mapToLong(DossierMedicale::getId).max().orElse(0L);
+            element.setId(maxId + 1);
+           Files.writeString(
+                   DOSSIER_MEDICAL_FILE.toPath(),
+                   mapToLine(element),
+                   StandardOpenOption.APPEND
+           );
+           return element;
+       } catch (IOException e){
+           throw new DaoException(e);
+       }
+    }
+
+    @Override
+    public void update(DossierMedicale element) throws DaoException {
 
     }
 
     @Override
-    public void deleteById(Object o) throws DaoException {
+    public void delete(DossierMedicale element) throws DaoException {
 
+    }
+
+    @Override
+    public void deleteById(Long aLong) throws DaoException {
+
+    }
+
+    public static void main(String[] args) throws DaoException {
+        patientRepo = new PatientRepo();
+        new DossierMedicalRepo().findAll().forEach(dossierMedicale -> System.out.println(dossierMedicale.toString()));
     }
 }
