@@ -1,7 +1,7 @@
 package ma.CabinetDentaire.presentation.controller.api;
 
 import ma.CabinetDentaire.entities.Patient;
-import ma.CabinetDentaire.presentation.view.PatientView;
+import ma.CabinetDentaire.presentation.view.patient.PatientView;
 
 import java.util.List;
 

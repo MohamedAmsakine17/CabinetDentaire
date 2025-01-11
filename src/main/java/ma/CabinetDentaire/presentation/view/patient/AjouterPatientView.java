@@ -1,11 +1,9 @@
-package ma.CabinetDentaire.presentation.view.palette.panels.patient_panels;
+package ma.CabinetDentaire.presentation.view.patient;
 
 import ma.CabinetDentaire.config.AppFactory;
 import ma.CabinetDentaire.entities.enums.Mutuelle;
 import ma.CabinetDentaire.entities.enums.Sexe;
-import ma.CabinetDentaire.presentation.view.PatientView;
 import ma.CabinetDentaire.presentation.view.palette.buttons.MyButton;
-import ma.CabinetDentaire.presentation.view.palette.fields.TextInputField;
 import ma.CabinetDentaire.presentation.view.palette.form.FormGroup;
 import ma.CabinetDentaire.presentation.view.palette.form.SelectFormGroup;
 import ma.CabinetDentaire.presentation.view.palette.labels.MyLabel;
@@ -18,7 +16,6 @@ import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -26,7 +23,7 @@ import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.time.LocalDate;
 
-public class AjouterPatientPanel extends JPanel {
+public class AjouterPatientView extends JPanel {
     private Theme currentTheme;
     private JPanel parentPanel;
     private MyLabel cin, nom_et_prenom, email, telephone, adresse, sexe, mutuelle;
@@ -105,7 +102,7 @@ public class AjouterPatientPanel extends JPanel {
                                 JFileChooser fileChooser = new JFileChooser();
                                 fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
 
-                                Component parent = SwingUtilities.getWindowAncestor(AjouterPatientPanel.this);
+                                Component parent = SwingUtilities.getWindowAncestor(AjouterPatientView.this);
                                 int result = fileChooser.showOpenDialog(parent);
                                 if (result == JFileChooser.APPROVE_OPTION) {
                                     File selectedFile = fileChooser.getSelectedFile();
@@ -361,8 +358,11 @@ public class AjouterPatientPanel extends JPanel {
 
         errorMessageLabel.setText("");
         updatePicturName();
-        AppFactory.getPatientController().createPatient();
 
+        parentPanel.removeAll();
+        parentPanel.revalidate();
+        parentPanel.repaint();
+        parentPanel.add(AppFactory.getPatientController().showAllPatients());
     }
 
     private void refrech(){
@@ -383,7 +383,7 @@ public class AjouterPatientPanel extends JPanel {
         mutuelle.setText("CIMR");
     }
 
-    public AjouterPatientPanel(Theme currentTheme, JPanel parent) {
+    public AjouterPatientView(Theme currentTheme, JPanel parent) {
         this.currentTheme = currentTheme;
         this.parentPanel = parent;
         _init();

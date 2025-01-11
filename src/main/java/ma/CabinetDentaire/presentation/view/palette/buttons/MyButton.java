@@ -30,7 +30,7 @@ public class MyButton extends JButton {
         setBackground(bgColor);
         setForeground(currentTheme.fontColor());
 
-        font = new MyLabel(currentTheme,text,22,1);
+        font = new MyLabel(currentTheme,this.text,22,1);
         add(font);
 
         setBorderPainted(false);

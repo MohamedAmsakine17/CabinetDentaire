@@ -6,13 +6,12 @@ import ma.CabinetDentaire.entities.enums.Mutuelle;
 import ma.CabinetDentaire.entities.enums.Sexe;
 import ma.CabinetDentaire.presentation.controller.api.IPatientController;
 import ma.CabinetDentaire.presentation.view.themes.Theme;
-import ma.CabinetDentaire.presentation.view.PatientView;
+import ma.CabinetDentaire.presentation.view.patient.PatientView;
 import ma.CabinetDentaire.service.IPatientService;
 import ma.CabinetDentaire.service.exceptions.PatientException;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Locale;
 
 public class PatientController implements IPatientController {
 

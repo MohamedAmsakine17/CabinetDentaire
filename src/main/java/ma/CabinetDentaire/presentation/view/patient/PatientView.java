@@ -1,12 +1,10 @@
-package ma.CabinetDentaire.presentation.view;
+package ma.CabinetDentaire.presentation.view.patient;
 
 import ma.CabinetDentaire.config.AppFactory;
 import ma.CabinetDentaire.entities.Patient;
 import ma.CabinetDentaire.entities.enums.Sexe;
 import ma.CabinetDentaire.presentation.view.palette.buttons.MyButton;
-import ma.CabinetDentaire.presentation.view.palette.fields.TextInputField;
 import ma.CabinetDentaire.presentation.view.palette.labels.MyLabel;
-import ma.CabinetDentaire.presentation.view.palette.panels.patient_panels.AjouterPatientPanel;
 import ma.CabinetDentaire.presentation.view.util.SearchBar;
 import ma.CabinetDentaire.presentation.view.palette.Table.CustomTableCol;
 import ma.CabinetDentaire.presentation.view.palette.Table.CustomTableHeader;
@@ -29,7 +27,7 @@ public class PatientView extends JPanel {
     private MyButton next, prev;
 
     private final JPanel mainPanel;
-    private final AjouterPatientPanel ajouterPatientPanel;
+    private final AjouterPatientView ajouterPatientPanel;
 
     private JPanel tablePanel;
     private int nbrPatientToDisplay;
@@ -134,8 +132,8 @@ public class PatientView extends JPanel {
         content.add(tablePanel, BorderLayout.CENTER);
 
         JPanel patientPagenation = new JPanel(new BorderLayout());
-        next = new MyButton(currentTheme,">",null,currentTheme.greenColor(), currentTheme.greenHoverColor());
-        prev = new MyButton(currentTheme,"<",null,currentTheme.greenColor(), currentTheme.greenHoverColor());
+        next = new MyButton(currentTheme,"N",null,currentTheme.greenColor(), currentTheme.greenHoverColor());
+        prev = new MyButton(currentTheme,"P",null,currentTheme.greenColor(), currentTheme.greenHoverColor());
 
 
         next.changeMargin(1,0,1,0);
@@ -229,7 +227,7 @@ public class PatientView extends JPanel {
         this.patientsHommeCount = nbrPatientsHomme;
         this.nbrPatientEnfant = nbrPatientEnfant;
 
-        this.ajouterPatientPanel = new AjouterPatientPanel(currentTheme, this);
+        this.ajouterPatientPanel = new AjouterPatientView(currentTheme, this);
         this.mainPanel = initMainPanel();
 
         _init();
@@ -242,7 +240,7 @@ public class PatientView extends JPanel {
         add(panel);
     }
 
-    public AjouterPatientPanel getAjouterPatientPanel() {
+    public AjouterPatientView getAjouterPatientPanel() {
         return ajouterPatientPanel;
     }
 }
