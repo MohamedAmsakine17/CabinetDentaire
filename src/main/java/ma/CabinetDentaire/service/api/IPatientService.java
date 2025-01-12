@@ -1,4 +1,4 @@
-package ma.CabinetDentaire.service;
+package ma.CabinetDentaire.service.api;
 
 import ma.CabinetDentaire.entities.Patient;
 import ma.CabinetDentaire.entities.enums.Sexe;

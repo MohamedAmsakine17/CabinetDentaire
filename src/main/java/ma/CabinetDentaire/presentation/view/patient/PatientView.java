@@ -5,7 +5,7 @@ import ma.CabinetDentaire.entities.Patient;
 import ma.CabinetDentaire.entities.enums.Sexe;
 import ma.CabinetDentaire.presentation.view.palette.buttons.MyButton;
 import ma.CabinetDentaire.presentation.view.palette.labels.MyLabel;
-import ma.CabinetDentaire.presentation.view.util.SearchBar;
+import ma.CabinetDentaire.presentation.view.palette.panels.LayerPaneContainer;
 import ma.CabinetDentaire.presentation.view.palette.Table.CustomTableCol;
 import ma.CabinetDentaire.presentation.view.palette.Table.CustomTableHeader;
 import ma.CabinetDentaire.presentation.view.palette.panels.patient_panels.PatientFooter;
@@ -26,7 +26,7 @@ public class PatientView extends JPanel {
     private int nbrPatientEnfant;
     private MyButton next, prev;
 
-    private final JPanel mainPanel;
+    private JPanel mainPanel;
     private final AjouterPatientView ajouterPatientPanel;
 
     private JPanel tablePanel;
@@ -39,44 +39,17 @@ public class PatientView extends JPanel {
         setLayout(new BorderLayout());
         setOpaque(false);
 
-        add(mainPanel);
-    }
+        LayerPaneContainer layerPaneContainer = new LayerPaneContainer(currentTheme);
 
-    private void displayPatients(){
-        tablePanel.removeAll();
-        tablePanel.revalidate();
-        tablePanel.repaint();
 
-        String[] colsName = {"","Nom","Prenom", "Telephone","Email","Sexe","Age"};
-        CustomTableHeader customTableHeader = new CustomTableHeader(currentTheme, colsName);
-        tablePanel.add(customTableHeader);
+        mainPanel = initMainPanel();
 
-        // Calculate the correct end index
-        int endIndex = Math.min(lastElementIndex + nbrPatientToDisplay, patients.size());  // Ensure it doesn't go out of bounds
 
-        for (int i = lastElementIndex; i < endIndex; i++) {
-            CustomTableCol customTableCol = new CustomTableCol(currentTheme, new String[]{
-                    patients.get(i).getPhotoDeProfile(),
-                    patients.get(i).getNom(),
-                    patients.get(i).getPrenom(),
-                    patients.get(i).getTelephone(),
-                    patients.get(i).getEmail(),
-                    (patients.get(i).getSexe().equals(Sexe.FEMME) ? "Femme" : "Homme"),
-                    Period.between(patients.get(i).getDataDeNaissance(), LocalDate.now()).getYears() + "",
-            });
-            tablePanel.add(customTableCol);
-        }
-    }
+        mainPanel.setBounds(0, 70, 1066, 698);
 
-    private void updatePatients(List<Patient> filteredPatients){
-        this.patients = filteredPatients;
-        initPagination();
-        displayPatients();
-    }
+        layerPaneContainer.add(mainPanel, JLayeredPane.DEFAULT_LAYER);
 
-    private void filterPatients(String keyword) {
-        List<Patient> filteredPatients = AppFactory.getPatientController().filterByName(keyword.toLowerCase());
-        updatePatients(filteredPatients);
+        add(layerPaneContainer, BorderLayout.CENTER);
     }
 
     private JPanel initMainPanel(){
@@ -85,8 +58,8 @@ public class PatientView extends JPanel {
         JPanel mainPanel = new JPanel(new BorderLayout());
         mainPanel.setOpaque(false);
 
-        SearchBar searchBar = new SearchBar(currentTheme, this::filterPatients);
-        mainPanel.add(searchBar, BorderLayout.NORTH);
+
+        //mainPanel.add(searchBar, BorderLayout.NORTH);
 
         //add(mainPanel, BorderLayout.NORTH);
 
@@ -99,14 +72,12 @@ public class PatientView extends JPanel {
 
         MyLabel title = new MyLabel(currentTheme,"Patients",24,1);
 
-        JPanel CRUDButtons = new JPanel();
-        CRUDButtons.setOpaque(false);
+        //JPanel CRUDButtons = new JPanel();
+        //CRUDButtons.setOpaque(false);
 
-        CRUDButtons.setLayout(new FlowLayout(FlowLayout.RIGHT));
+        //CRUDButtons.setLayout(new FlowLayout(FlowLayout.RIGHT));
         MyButton createBtn = new MyButton(currentTheme,"src/main/resources/images/add_patient.png");
         createBtn.setOpaque(false);
-
-        createBtn.changeTextSize(16);
 
         createBtn.changeMargin(10,15,10,15);
 
@@ -116,10 +87,10 @@ public class PatientView extends JPanel {
             }
         });
 
-        CRUDButtons.add(createBtn);
+        //CRUDButtons.add(createBtn);
 
         contentHeader.add(title, BorderLayout.LINE_START);
-        contentHeader.add(CRUDButtons, BorderLayout.LINE_END);
+        contentHeader.add(createBtn, BorderLayout.LINE_END);
 
         content.add(contentHeader, BorderLayout.NORTH);
 
@@ -132,8 +103,8 @@ public class PatientView extends JPanel {
         content.add(tablePanel, BorderLayout.CENTER);
 
         JPanel patientPagenation = new JPanel(new BorderLayout());
-        next = new MyButton(currentTheme,"N",null,currentTheme.greenColor(), currentTheme.greenHoverColor());
-        prev = new MyButton(currentTheme,"P",null,currentTheme.greenColor(), currentTheme.greenHoverColor());
+        next = new MyButton(currentTheme,"src/main/resources/images/right-arrow.png"); next.changeImageSize(32); next.setOpaque(false);
+        prev = new MyButton(currentTheme,"src/main/resources/images/left-arrow.png"); prev.changeImageSize(32); prev.setOpaque(false);
 
 
         next.changeMargin(1,0,1,0);
@@ -142,8 +113,6 @@ public class PatientView extends JPanel {
         next.setPreferredSize(new Dimension(40,40));
         prev.setPreferredSize(new Dimension(40,40));
 
-        next.changeTextSize(22);
-        prev.changeTextSize(22);
         prev.setVisible(false);
 
         next.addMouseListener(new MouseAdapter() {
@@ -212,6 +181,52 @@ public class PatientView extends JPanel {
         return mainPanel;
     }
 
+    private void displayPatients(){
+        tablePanel.removeAll();
+        tablePanel.revalidate();
+        tablePanel.repaint();
+
+        String[] colsName = {"","Nom","Prenom", "Telephone","Email","Sexe","Age"};
+        CustomTableHeader customTableHeader = new CustomTableHeader(currentTheme, colsName);
+        tablePanel.add(customTableHeader);
+
+        // Calculate the correct end index
+        int endIndex = Math.min(lastElementIndex + nbrPatientToDisplay, patients.size());  // Ensure it doesn't go out of bounds
+
+        for (int i = lastElementIndex; i < endIndex; i++) {
+            CustomTableCol customTableCol = new CustomTableCol(currentTheme, new String[]{
+                    patients.get(i).getPhotoDeProfile(),
+                    patients.get(i).getNom(),
+                    patients.get(i).getPrenom(),
+                    patients.get(i).getTelephone(),
+                    patients.get(i).getEmail(),
+                    (patients.get(i).getSexe().equals(Sexe.FEMME) ? "Femme" : "Homme"),
+                    Period.between(patients.get(i).getDataDeNaissance(), LocalDate.now()).getYears() + "",
+            });
+            int finalI = i;
+            customTableCol.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    updatePanel(AppFactory.getDossierMedicalController().showPatientDossierMedicale(patients.get(finalI).getId()));
+                }
+            });
+            tablePanel.add(customTableCol);
+        }
+    }
+
+    private void updatePatients(List<Patient> filteredPatients){
+        this.patients = filteredPatients;
+        initPagination();
+        displayPatients();
+    }
+
+    private void filterPatients(String keyword) {
+        List<Patient> filteredPatients = AppFactory.getPatientController().filterByName(keyword.toLowerCase());
+        updatePatients(filteredPatients);
+    }
+
+
+
     private void initPagination(){
         this.nbrPatientToDisplay = 5;
         this.lastElementIndex = 0;
@@ -221,15 +236,13 @@ public class PatientView extends JPanel {
         this.currentPage = 1;
     }
 
-    public PatientView(Theme currentTheme, List<Patient> patients, int nbrPatientsHomme,int nbrPatientEnfant){
+    public PatientView(Theme currentTheme, List<Patient> patients, int nbrPatientsHomme, int nbrPatientEnfant ){
         this.currentTheme = currentTheme;
         this.patients = patients;
         this.patientsHommeCount = nbrPatientsHomme;
         this.nbrPatientEnfant = nbrPatientEnfant;
 
         this.ajouterPatientPanel = new AjouterPatientView(currentTheme, this);
-        this.mainPanel = initMainPanel();
-
         _init();
     }
 

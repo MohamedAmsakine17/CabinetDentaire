@@ -1,64 +1,132 @@
 package ma.CabinetDentaire.presentation.view;
 
+import ma.CabinetDentaire.config.AppFactory;
+import ma.CabinetDentaire.entities.DossierMedicale;
+import ma.CabinetDentaire.presentation.view.palette.buttons.MyButton;
 import ma.CabinetDentaire.presentation.view.palette.labels.MyLabel;
 import ma.CabinetDentaire.presentation.view.themes.Theme;
+import ma.CabinetDentaire.presentation.view.util.RoundedLabelUtils;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class DossierMedicalView extends JPanel {
     private Theme currentTheme;
+    private DossierMedicale dossierMedicale;
 
     private void _init(){
-        setBackground(Color.blue);
         setLayout(new BorderLayout());
+        setOpaque(false);
 
-        JPanel headerPanel = new JPanel();
-        headerPanel.setBackground(Color.PINK);
+        // ====================== Header Panel ==================================
+        JPanel headerPanel = new JPanel(new BorderLayout());
+        headerPanel.setBorder(new EmptyBorder(15, 30, 25, 30));
+        headerPanel.setOpaque(false);
 
-        JPanel avatarInfoPanel = new JPanel(new BorderLayout());
-        avatarInfoPanel.setBackground(Color.green);
+        JPanel headerTitlePanel = new JPanel(new BorderLayout());
+        headerTitlePanel.setBorder(new EmptyBorder(0, 0, 15, 0));
+        headerTitlePanel.setOpaque(false);
 
-        JPanel avatarPanel = new JPanel(new GridLayout(3,1));
-        MyLabel idLabel = new MyLabel(currentTheme,"#ID",10,1);
-        JLabel pfpLabel = new JLabel();
-        pfpLabel.setBackground(Color.blue);
-        pfpLabel.setPreferredSize(new Dimension(100,100));
-        MyLabel activeLabel = new MyLabel(currentTheme,"ACTIVE",12,1);
-        avatarPanel.add(idLabel);
-        avatarPanel.add(pfpLabel);
-        avatarPanel.add(activeLabel);
+        MyLabel title = new MyLabel(currentTheme,"Dossier Medical",24,1);
+        MyButton backBtn = new MyButton(currentTheme,"src/main/resources/images/back_btn.png");
+        backBtn.changeMargin(5, 30, 5, 0);
+        backBtn.setOpaque(false);
+        backBtn.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                MainView.updateRightPanel(AppFactory.getPatientController().showAllPatients());
+            }
+        });
+        headerTitlePanel.add(title, BorderLayout.WEST);
+        headerTitlePanel.add(backBtn, BorderLayout.EAST);
 
+        // ---------------------- Header Container ------------------------------
+        JPanel headerContainer = new JPanel(new BorderLayout());
+        headerContainer.setBackground(currentTheme.bgColor());
+        headerContainer.setBorder(new EmptyBorder(15, 15, 15, 15));
+
+        // Avatar Info Container
+        JPanel avatarInfoContainer = new JPanel(new BorderLayout());
+        avatarInfoContainer.setOpaque(false);
+
+        // Avatar Panel
+        JPanel avatarPanel = new JPanel(new BorderLayout());
+        avatarPanel.setOpaque(false);
+        MyLabel idLabel = new MyLabel(currentTheme,"#" + dossierMedicale.getPatient().getId(),12,1); idLabel.setBorder(new EmptyBorder(0, 0, 15, 0));
+        JLabel pfpLabel = new JLabel(); pfpLabel.setPreferredSize(new Dimension(128,128));  pfpLabel.setBackground(Color.blue); pfpLabel.setOpaque(true);
+        RoundedLabelUtils.makeRounded(pfpLabel, 128);
+        avatarPanel.add(idLabel, BorderLayout.NORTH);
+        avatarPanel.add(pfpLabel, BorderLayout.CENTER);
+        // Info Panel
         JPanel infoPanel = new JPanel(new GridLayout(7,1));
-        MyLabel cinLabel = new MyLabel(currentTheme,"CIN",10,1);
+        infoPanel.setBorder(new EmptyBorder(0, 25, 0, 0));
+        infoPanel.setOpaque(false);
+        MyLabel cinLabel = new MyLabel(currentTheme,dossierMedicale.getPatient().getCin(),10,1,"src/main/resources/images/form/cin.png",20);
         infoPanel.add(cinLabel);
-        MyLabel nomLabel = new MyLabel(currentTheme,"Nom",14,1);
-        infoPanel.add(nomLabel);
-        MyLabel prenomLabel = new MyLabel(currentTheme,"Prenom",12,0);
-        infoPanel.add(prenomLabel);
-        MyLabel emailLabel = new MyLabel(currentTheme,"Email",12,0);
+        MyLabel nomEtPrenomLabel = new MyLabel(currentTheme,dossierMedicale.getPatient().getNom() + " " + dossierMedicale.getPatient().getPrenom(),18,1 ,"src/main/resources/images/form/prenom.png",20);
+        nomEtPrenomLabel.changeColor(currentTheme.greenColor());
+        infoPanel.add(nomEtPrenomLabel);
+        MyLabel emailLabel = new MyLabel(currentTheme,dossierMedicale.getPatient().getEmail(),12,0,"src/main/resources/images/form/email.png",20);
         infoPanel.add(emailLabel);
-        MyLabel telephone = new MyLabel(currentTheme,"Telephone",12,0);
+        MyLabel telephone = new MyLabel(currentTheme,dossierMedicale.getPatient().getTelephone(),12,0,"src/main/resources/images/form/telephone.png",20);
         infoPanel.add(telephone);
-        MyLabel addressLabel = new MyLabel(currentTheme,"Address",12,0);
+        MyLabel addressLabel = new MyLabel(currentTheme,dossierMedicale.getPatient().getAdresse(),12,0,"src/main/resources/images/form/address.png",20);
         infoPanel.add(addressLabel);
-        MyLabel mutuelle = new MyLabel(currentTheme,"Mutuelle",12,0);
+        MyLabel mutuelle = new MyLabel(currentTheme,dossierMedicale.getPatient().getMutuelle().toString(),12,0,"src/main/resources/images/form/assurance.png",20);
         infoPanel.add(mutuelle);
-        MyLabel sexe =  new MyLabel(currentTheme,"Sexe",12,0);
+        MyLabel sexe =  new MyLabel(currentTheme,dossierMedicale.getPatient().getSexe().toString(),12,0,"src/main/resources/images/form/sexe.png",20);
         infoPanel.add(sexe);
 
-        avatarInfoPanel.add(avatarPanel, BorderLayout.LINE_START);
-        avatarInfoPanel.add(infoPanel, BorderLayout.LINE_END);
-        // ------------ BODY PANEL ---------------
-        JPanel bodyPanel = new JPanel();
-        bodyPanel.setBackground(Color.red);
+        avatarInfoContainer.add(avatarPanel, BorderLayout.LINE_START);
+        avatarInfoContainer.add(infoPanel, BorderLayout.LINE_END);
+
+        // Buttons Dats Container
+        JPanel headerLeftContent = new JPanel(new BorderLayout());
+        headerLeftContent.setOpaque(false);
+
+        // Buttons Container
+        JPanel buttonsContainer = new JPanel(new BorderLayout());
+        buttonsContainer.setOpaque(false);
+        MyButton editBtn = new MyButton(currentTheme,"Modifier",16,currentTheme.greenColor(),currentTheme.greenHoverColor(),"src/main/resources/images/edit_user.png",18);
+        MyButton deleteBtn = new MyButton(currentTheme,"Supprimer",16,currentTheme.redColor(),currentTheme.redHoverColor(),"src/main/resources/images/delete_user.png",18);
+        editBtn.changeMargin(5,5,5,5);
+        deleteBtn.changeMargin(5,5,5,5);
+        buttonsContainer.add(editBtn, BorderLayout.NORTH);
+        buttonsContainer.add(deleteBtn, BorderLayout.SOUTH);
+        buttonsContainer.setBorder(new EmptyBorder(0, 0, 10, 0));
+
+        MyLabel dateCreation =  new MyLabel(currentTheme,dossierMedicale.getDateCreation().toString(),14,1,"src/main/resources/images/creation_date.png",20);
+        dateCreation.setBorder(new EmptyBorder(20, 0, 20, 0));
+
+        headerLeftContent.add(buttonsContainer, BorderLayout.CENTER);
+        headerLeftContent.add(dateCreation,BorderLayout.SOUTH);
+
+        headerContainer.add(avatarInfoContainer, BorderLayout.LINE_START);
+        headerContainer.add(headerLeftContent, BorderLayout.LINE_END);
+
+        headerPanel.add(headerTitlePanel, BorderLayout.NORTH);
+        headerPanel.add(headerContainer, BorderLayout.CENTER);
+
+        // ====================== Body Panel ==================================
+        JPanel bodyPanel = new JPanel(new BorderLayout());
+        bodyPanel.setBorder(new EmptyBorder(0, 30, 30, 30));
+        bodyPanel.setOpaque(false);
+
+        JPanel bodyContentPanel = new JPanel();
+        bodyContentPanel.setBackground(currentTheme.bgColor());
+
+        bodyPanel.add(bodyContentPanel, BorderLayout.CENTER);
 
         add(headerPanel, BorderLayout.NORTH);
         add(bodyPanel, BorderLayout.CENTER);
     }
 
-    public DossierMedicalView(Theme currentTheme) {
+    public DossierMedicalView(Theme currentTheme, DossierMedicale dossierMedicale) {
         this.currentTheme = currentTheme;
+        this.dossierMedicale = dossierMedicale;
         _init();
     }
 }

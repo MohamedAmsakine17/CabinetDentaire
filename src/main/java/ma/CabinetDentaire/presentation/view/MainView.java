@@ -9,7 +9,8 @@ import java.awt.*;
 public class MainView extends JFrame {
     private Theme currentTheme;
     private UserInfoPanel userInfoPanel;
-    private JPanel leftPanel, rightPanel;
+    private JPanel leftPanel;
+    private static JPanel rightPanel;
 
     public void _init(){
         leftPanel = new JPanel();
@@ -33,7 +34,7 @@ public class MainView extends JFrame {
     public MainView(Theme currentTheme) {
         this.currentTheme = currentTheme;
 
-        setSize(1280, 720);
+        setSize(1366, 768);
         setResizable(false);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
@@ -43,5 +44,12 @@ public class MainView extends JFrame {
         _init();
 
         setVisible(true);
+    }
+
+    public static void updateRightPanel(JPanel panel){
+        rightPanel.removeAll();
+        rightPanel.revalidate();
+        rightPanel.repaint();
+        rightPanel.add(panel);
     }
 }

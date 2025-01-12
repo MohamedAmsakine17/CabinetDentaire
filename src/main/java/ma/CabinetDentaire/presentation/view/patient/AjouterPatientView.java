@@ -8,6 +8,7 @@ import ma.CabinetDentaire.presentation.view.palette.form.FormGroup;
 import ma.CabinetDentaire.presentation.view.palette.form.SelectFormGroup;
 import ma.CabinetDentaire.presentation.view.palette.labels.MyLabel;
 import ma.CabinetDentaire.presentation.view.themes.Theme;
+import ma.CabinetDentaire.presentation.view.util.RoundedLabelUtils;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -63,6 +64,7 @@ public class AjouterPatientView extends JPanel {
 
             MyButton backBtn = new MyButton(currentTheme,"src/main/resources/images/back_btn.png");
             backBtn.setOpaque(false);
+            backBtn.changeMargin(5, 30, 5, 0);
             backBtn.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
@@ -86,13 +88,18 @@ public class AjouterPatientView extends JPanel {
                 JPanel patientInfoPanel = new JPanel(new BorderLayout());
                 patientInfoPanel.setBackground(currentTheme.greenColor());
 
-                    JPanel pfpPanel = new JPanel(new BorderLayout());
+                    JPanel pfpPanel = new JPanel();
                     pfpPanel.setOpaque(false);
-                    pfpPanel.setBorder(BorderFactory.createEmptyBorder(10, 25, 10, 0));
-                        ImageIcon icon = new ImageIcon("src/main/resources/images/patient_pfp/default_picture.jpg");
+                    pfpPanel.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
+                        ImageIcon icon = new ImageIcon("src/main/resources/images/patient_pfp/default_pfp.png");
+                        try{
+                            icon = RoundedLabelUtils.makeImageRounded("src/main/resources/images/patient_pfp/default_pfp.png");
+                        } catch (IOException e1) {
+                            System.out.println(e1.getMessage());
+                        }
                         Image img = icon.getImage().getScaledInstance(128,128, Image.SCALE_SMOOTH);
                         JLabel pfplabel = new JLabel();
-                        pfplabel.setPreferredSize(new Dimension(250,150));
+                        pfplabel.setPreferredSize(new Dimension(128, 128));
                         pfplabel.setIcon(new ImageIcon(img));
                         pfplabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
@@ -127,7 +134,8 @@ public class AjouterPatientView extends JPanel {
                         });
 
 
-                    pfpPanel.add(pfplabel, BorderLayout.CENTER);
+                    RoundedLabelUtils.makeRounded(pfplabel, 128);
+                    pfpPanel.add(pfplabel);
 
                     JPanel patientInof= new JPanel(new GridLayout(7,1));
                     patientInof.setOpaque(false);
@@ -157,7 +165,7 @@ public class AjouterPatientView extends JPanel {
                     JPanel footerPanel = new JPanel(new BorderLayout());
                     footerPanel.setBorder(BorderFactory.createEmptyBorder(15, 25, 15, 25));
                     footerPanel.setOpaque(false);
-                        MyButton saveBtn = new MyButton(currentTheme,"Ajouter",null,currentTheme.whiteColor(),currentTheme.darkBgColor());
+                        MyButton saveBtn = new MyButton(currentTheme,"Ajouter",currentTheme.whiteColor(),currentTheme.darkBgColor());
                         saveBtn.setForeground(currentTheme.greenColor());
                         saveBtn.addMouseListener(new MouseAdapter() {
                             @Override

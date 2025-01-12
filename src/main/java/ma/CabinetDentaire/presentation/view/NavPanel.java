@@ -23,6 +23,7 @@ public class NavPanel extends JPanel {
         // Create and add NavLinks
         NavLink dashboard = new NavLink(currentTheme, "Dashboard", "src/main/resources/images/dashboard.png");
         NavLink patient = new NavLink(currentTheme, "Patients", "src/main/resources/images/patient_icon.png");
+        NavLink medicament = new NavLink(currentTheme, "Medicament", "src/main/resources/images/medicament.png");
         NavLink rendezVous = new NavLink(currentTheme, "Rendez-vous", "src/main/resources/images/rendezvous.png");
         NavLink consultation = new NavLink(currentTheme, "Consultation", "src/main/resources/images/consultation.png");
         NavLink ordonnances = new NavLink(currentTheme, "Ordonnances", "src/main/resources/images/ordonnance.png");
@@ -39,6 +40,13 @@ public class NavPanel extends JPanel {
             public void mouseClicked(MouseEvent e) {
                 updateRightPanel();
                 rightPanel.add(AppFactory.getPatientController().showAllPatients());
+            }
+        });
+
+        medicament.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                updateRightPanel();
+                rightPanel.add(new MedicamentView(currentTheme));
             }
         });
 
@@ -59,6 +67,8 @@ public class NavPanel extends JPanel {
         add(dashboard);
         add(Box.createRigidArea(new Dimension(0, 25)));
         add(patient);
+        add(Box.createRigidArea(new Dimension(0, 25)));
+        add(medicament);
         add(Box.createRigidArea(new Dimension(0, 25)));
         add(rendezVous);
         add(Box.createRigidArea(new Dimension(0, 25)));

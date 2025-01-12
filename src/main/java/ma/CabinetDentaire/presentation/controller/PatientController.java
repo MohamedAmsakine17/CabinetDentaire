@@ -7,7 +7,7 @@ import ma.CabinetDentaire.entities.enums.Sexe;
 import ma.CabinetDentaire.presentation.controller.api.IPatientController;
 import ma.CabinetDentaire.presentation.view.themes.Theme;
 import ma.CabinetDentaire.presentation.view.patient.PatientView;
-import ma.CabinetDentaire.service.IPatientService;
+import ma.CabinetDentaire.service.api.IPatientService;
 import ma.CabinetDentaire.service.exceptions.PatientException;
 
 import java.time.LocalDate;
@@ -67,6 +67,4 @@ public class PatientController implements IPatientController {
 
         showAllPatients();
     }
-
-
 }

@@ -93,7 +93,7 @@ public class LoginView extends JFrame {
         JPanel buttonsPanel = new JPanel(new BorderLayout());
         buttonsPanel.setOpaque(false);
 
-        MyButton loginBtn = new MyButton(currentTheme,"Login", null, currentTheme.greenColor(), currentTheme.greenHoverColor());
+        MyButton loginBtn = new MyButton(currentTheme,"Login", currentTheme.greenColor(), currentTheme.greenHoverColor());
         buttonsPanel.add(loginBtn, BorderLayout.WEST);
 
         panel.add(buttonsPanel, BorderLayout.SOUTH);

@@ -134,4 +134,13 @@ public class DossierMedicalRepo implements IDossierMedicalRepo {
         patientRepo = new PatientRepo();
         new DossierMedicalRepo().findAll().forEach(dossierMedicale -> System.out.println(dossierMedicale.toString()));
     }
+
+    @Override
+    public DossierMedicale findByPatientId(Long id) throws DaoException {
+        return findAll()
+                .stream()
+                .filter(d -> d.getPatient().getId().equals(id))
+                .findFirst()
+                .orElseThrow(()->new DaoException("Aucun dossier Dp" + id));
+    }
 }

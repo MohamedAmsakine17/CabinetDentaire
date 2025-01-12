@@ -7,6 +7,7 @@ import ma.CabinetDentaire.entities.enums.StatutPaiment;
 import ma.CabinetDentaire.repository.api.IDossierMedicalRepo;
 import ma.CabinetDentaire.repository.api.IPatientRepo;
 import ma.CabinetDentaire.repository.exceptions.DaoException;
+import ma.CabinetDentaire.service.api.IPatientService;
 import ma.CabinetDentaire.service.exceptions.PatientException;
 
 import java.time.LocalDate;
