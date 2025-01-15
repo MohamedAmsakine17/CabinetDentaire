@@ -11,6 +11,7 @@ public class FormGroup extends JPanel {
     private Theme currentTheme;
     private String text, iconSrc;
     private TextInputField inputField;
+    private String placeHolder;
 
     private void _init(){
         setLayout(new BorderLayout());
@@ -24,7 +25,7 @@ public class FormGroup extends JPanel {
         inputFieldContainer.setBorder(BorderFactory.createEmptyBorder(0, 20, 0, 0));
         inputFieldContainer.setOpaque(false);
         MyLabel label = new MyLabel(currentTheme,text,12,1);
-        inputField = new TextInputField(currentTheme,"",14);
+        inputField = new TextInputField(currentTheme,placeHolder,14);
         inputFieldContainer.add(label);
         inputFieldContainer.add(inputField);
 
@@ -36,6 +37,15 @@ public class FormGroup extends JPanel {
         this.currentTheme = currentTheme;
         this.text = text;
         this.iconSrc = iconSrc;
+        this.placeHolder = "";
+        _init();
+    }
+
+    public FormGroup(Theme currentTheme, String text, String iconSrc,String placeholder){
+        this.currentTheme = currentTheme;
+        this.text = text;
+        this.iconSrc = iconSrc;
+        this.placeHolder = placeholder;
         _init();
     }
 

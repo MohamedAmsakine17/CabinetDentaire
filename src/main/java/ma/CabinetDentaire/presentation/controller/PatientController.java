@@ -1,10 +1,13 @@
 package ma.CabinetDentaire.presentation.controller;
 
+import ma.CabinetDentaire.config.AppFactory;
 import ma.CabinetDentaire.entities.Patient;
 import ma.CabinetDentaire.entities.enums.GroupeSanguin;
 import ma.CabinetDentaire.entities.enums.Mutuelle;
 import ma.CabinetDentaire.entities.enums.Sexe;
 import ma.CabinetDentaire.presentation.controller.api.IPatientController;
+import ma.CabinetDentaire.presentation.view.MainView;
+import ma.CabinetDentaire.presentation.view.patient.ModifierPatientView;
 import ma.CabinetDentaire.presentation.view.themes.Theme;
 import ma.CabinetDentaire.presentation.view.patient.PatientView;
 import ma.CabinetDentaire.service.api.IPatientService;
@@ -18,6 +21,7 @@ public class PatientController implements IPatientController {
     private Theme currentTheme;
     IPatientService patientService;
     private PatientView patientView;
+    private ModifierPatientView modifierPatientView;
 
     public PatientController(Theme currentTheme, IPatientService patientService) {
         this.currentTheme = currentTheme;
@@ -36,6 +40,12 @@ public class PatientController implements IPatientController {
         } catch (PatientException e){
             throw new PatientException(e.getMessage());
         }
+    }
+
+    @Override
+    public ModifierPatientView showPatientsModifier(Patient patient) {
+        modifierPatientView = new ModifierPatientView(currentTheme, patient);
+        return modifierPatientView;
     }
 
     @Override
@@ -62,9 +72,20 @@ public class PatientController implements IPatientController {
         Mutuelle mutuelle = patientView.getAjouterPatientPanel().getAssurance();
         GroupeSanguin groupeSanguin = GroupeSanguin.O_POSITIF;
 
-        Patient patient = new Patient(0L,nom,prenom,cin,address,telephone,email,pfp,dateNaissance,sexe,groupeSanguin,mutuelle,null);
-        patientService.createPatient(patient);
+        Patient patient = patientService.createPatient(new Patient(0L,nom,prenom,cin,address,telephone,email,pfp,dateNaissance,sexe,groupeSanguin,mutuelle,null));
 
-        showAllPatients();
+        MainView.updateRightPanel(AppFactory.getDossierMedicalController().showPatientDossierMedicale(patient.getId()));
+    }
+
+    @Override
+    public void updatePatient(Long id, String nom, String prenom,String cin, String address, String telephone, String email, String pfp, LocalDate dateNaissance, Sexe sexe, Mutuelle mutuelle) {
+        patientService.updatePatient(new Patient(id,nom,prenom,cin,address,telephone,email,pfp,dateNaissance,sexe,GroupeSanguin.O_POSITIF,mutuelle,null));
+        MainView.updateRightPanel(AppFactory.getDossierMedicalController().showPatientDossierMedicale(id));
+    }
+
+    @Override
+    public void deletePatientById(Long id) {
+        patientService.deletePatientById(id);
+        MainView.updateRightPanel(showAllPatients());
     }
 }

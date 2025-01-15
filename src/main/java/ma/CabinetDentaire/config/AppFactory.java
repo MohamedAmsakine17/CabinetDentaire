@@ -1,13 +1,16 @@
 package ma.CabinetDentaire.config;
 
 import ma.CabinetDentaire.presentation.controller.DossierMedicalController;
+import ma.CabinetDentaire.presentation.controller.MedicamentController;
 import ma.CabinetDentaire.presentation.controller.PatientController;
 import ma.CabinetDentaire.presentation.view.themes.Theme;
 import ma.CabinetDentaire.presentation.view.themes.ThemeLight;
 import ma.CabinetDentaire.repository.fileDB_impl.DossierMedicalRepo;
+import ma.CabinetDentaire.repository.fileDB_impl.MedicamentRepo;
 import ma.CabinetDentaire.repository.fileDB_impl.PatientRepo;
 import ma.CabinetDentaire.repository.fileDB_impl.UtilisateurDAO;
 import ma.CabinetDentaire.service.DossierMedicalService;
+import ma.CabinetDentaire.service.MedicamentService;
 import ma.CabinetDentaire.service.PatientService;
 
 public class AppFactory {
@@ -21,6 +24,10 @@ public class AppFactory {
     static DossierMedicalService dossierMedicalService;
     static DossierMedicalController dossierMedicalController;
 
+    static MedicamentRepo medicamentRepo;
+    static MedicamentService medicamentService;
+    static MedicamentController medicamentController;
+
     static UtilisateurDAO utilisateurDAO;
 
     static {
@@ -28,6 +35,7 @@ public class AppFactory {
 
         patientRepo = new PatientRepo();
         dossierMedicalRepo = new DossierMedicalRepo();
+        medicamentRepo = new MedicamentRepo();
 
         patientService =  new PatientService(patientRepo,dossierMedicalRepo);
         patientController = new PatientController(currentTheme,patientService);
@@ -35,8 +43,9 @@ public class AppFactory {
         dossierMedicalRepo.setPatientRepo(patientRepo);
         dossierMedicalService = new DossierMedicalService(dossierMedicalRepo);
         dossierMedicalController = new DossierMedicalController(currentTheme,dossierMedicalService);
-        //dossierMedicalRepo = new DossierMedicalRepo();
-        //dossierMedicalRepo.setPatientRepo(patientRepo);
+
+        medicamentService =  new MedicamentService(medicamentRepo);
+        medicamentController = new MedicamentController(currentTheme,medicamentService);
 
         //patientRepo.setDossierMedicalRepo(dossierMedicalRepo);
 
@@ -81,5 +90,13 @@ public class AppFactory {
 
     public static void setDossierMedicalController(DossierMedicalController dossierMedicalController) {
         AppFactory.dossierMedicalController = dossierMedicalController;
+    }
+
+    public static MedicamentController getMedicamentController() {
+        return medicamentController;
+    }
+
+    public static void setMedicamentController(MedicamentController medicamentController) {
+        AppFactory.medicamentController = medicamentController;
     }
 }

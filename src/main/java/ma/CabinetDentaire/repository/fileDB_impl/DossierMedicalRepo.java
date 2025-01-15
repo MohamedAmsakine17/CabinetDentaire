@@ -6,10 +6,7 @@ import ma.CabinetDentaire.entities.enums.StatutPaiment;
 import ma.CabinetDentaire.repository.api.IDossierMedicalRepo;
 import ma.CabinetDentaire.repository.exceptions.DaoException;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.StandardOpenOption;
 import java.time.LocalDate;
@@ -126,13 +123,34 @@ public class DossierMedicalRepo implements IDossierMedicalRepo {
     }
 
     @Override
-    public void deleteById(Long aLong) throws DaoException {
+    public void deleteById(Long id) throws DaoException {
+        boolean isDeleted = false;
+        File tempFile = new File(DOSSIER_MEDICAL_FILE.getAbsolutePath() + ".tmp");
 
-    }
+        try (BufferedReader reader = new BufferedReader(new FileReader(DOSSIER_MEDICAL_FILE));
+             BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile));)
+        {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String currentID = line.split("\\|")[0];
+                if(id.toString().equals(currentID)) {
+                    isDeleted = true;
+                } else {
+                    writer.write(line);
+                    writer.newLine();
+                }
+            }
 
-    public static void main(String[] args) throws DaoException {
-        patientRepo = new PatientRepo();
-        new DossierMedicalRepo().findAll().forEach(dossierMedicale -> System.out.println(dossierMedicale.toString()));
+        } catch (IOException e) {
+            throw new DaoException(e);
+        }
+
+        if(!DOSSIER_MEDICAL_FILE.delete())
+            throw new DaoException("Probleme tech dans la suppression du patient");
+        if(!tempFile.renameTo(DOSSIER_MEDICAL_FILE))
+            throw new DaoException("Probleme tech dans la suppression du patient");
+        if(!isDeleted)
+            throw new DaoException("Patient n'" + id + " ");
     }
 
     @Override

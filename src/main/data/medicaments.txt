@@ -1,0 +1,16 @@
+ID|PRIX|NOM|DESCRIPTION|image
+1|150.0|Brosse à dents électrique|Brosse à dents électrique avec capteur de pression et minuterie intégrée.|Brosseàdentsélectrique|
+2|50|Dentifrice blanchissant|Dentifrice pour dents blanches, enrichi en fluor et en charbon actif.|dentifrice.png
+3|200|Kit de blanchiment dentaire|Kit complet pour blanchiment des dents avec gel et lampe LED.|kit_de_blanchiment.png
+4|100|Fil dentaire|Fil dentaire soyeux pour nettoyage interdentaire en profondeur.|fil_dentaire.png
+5|120|Bain de bouche|Bain de bouche à base de chlorhexidine pour une haleine fraîche et des gencives saines.|bain_de_bouche.png
+6|250|Irrigateur buccal|Appareil d'hygiène dentaire pour un nettoyage précis des espaces interdentaires.|Irrigateur.png
+7|70.0|Protege Dents|Protège-dents ajustable pour activités sportives.|ProtegeDents|
+8|90|Orthèse anti-ronflement|Dispositif confortable pour réduire le ronflement nocturne.|anti_ronflement.png
+9|30|Cire orthodontique|Cire orthodontique pour protéger les muqueuses des appareils dentaires.|cire_orthodontique.png
+10|80|Gel pour aphtes|Gel apaisant pour soulager rapidement la douleur des aphtes.|gel_aphtes.png
+11|40|Gouttière de bruxisme|Gouttière de protection nocturne pour les personnes souffrant de bruxisme.|Gouttière.png
+12|110|Spray buccal|Spray rafraîchissant pour haleine à base de menthe naturelle.|spray_buccal.png
+13|25|Mini-miroir dentaire|Mini-miroir pour l’inspection de la cavité buccale à domicile.|mini_miror.png
+14|180|Kit de nettoyage orthodontique|Kit complet avec brosse, fil spécial et accessoires pour appareils dentaires.|kit_de_nettoyage.png
+15|20.0|Doliprane|Entrez la description du médicament|Doliprane|

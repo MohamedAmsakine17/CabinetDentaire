@@ -12,4 +12,6 @@ public interface IPatientService {
     List<Patient> filterByAge(int age) throws PatientException;
     List<Patient> filterByName(String keyword) throws PatientException;
     Patient createPatient(Patient patient) throws PatientException;
+    void updatePatient(Patient patient) throws PatientException;
+    void deletePatientById(Long id) throws PatientException;
 }

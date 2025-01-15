@@ -68,4 +68,23 @@ public class PatientService implements IPatientService {
             throw new RuntimeException(e);
         }
     }
+
+    @Override
+    public void updatePatient(Patient patient) throws PatientException {
+        try{
+            patientRepo.update(patient);
+        } catch (DaoException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void deletePatientById(Long id) throws PatientException {
+        try{
+            dossierMedicalRepo.deleteById(dossierMedicalRepo.findByPatientId(id).getId());
+            patientRepo.deleteById(id);
+        } catch (DaoException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

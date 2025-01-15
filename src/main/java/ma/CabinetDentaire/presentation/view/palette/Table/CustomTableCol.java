@@ -2,11 +2,13 @@ package ma.CabinetDentaire.presentation.view.palette.Table;
 
 import ma.CabinetDentaire.presentation.view.palette.labels.MyLabel;
 import ma.CabinetDentaire.presentation.view.themes.Theme;
+import ma.CabinetDentaire.presentation.view.util.RoundedLabelUtils;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
 
 public class CustomTableCol extends JPanel {
     private Theme currentTheme;
@@ -23,6 +25,11 @@ public class CustomTableCol extends JPanel {
         for (int i = 0; i < dataContainer.length; i++){
             if(i == 0){
                 ImageIcon icon = new ImageIcon("src/main/resources/images/patient_pfp/" + dataContainer[i]);
+                try{
+                    icon = RoundedLabelUtils.makeImageRounded("src/main/resources/images/patient_pfp/" + dataContainer[i]);
+                } catch (IOException e1) {
+                    System.out.println(e1.getMessage());
+                }
                 icon.setImage(icon.getImage().getScaledInstance(32, 32, Image.SCALE_SMOOTH));
                 JLabel iconLabel = new JLabel(icon, SwingConstants.CENTER);
                 add(iconLabel);

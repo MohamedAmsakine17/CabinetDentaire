@@ -137,9 +137,9 @@ public class AjouterPatientView extends JPanel {
                     RoundedLabelUtils.makeRounded(pfplabel, 128);
                     pfpPanel.add(pfplabel);
 
-                    JPanel patientInof= new JPanel(new GridLayout(7,1));
-                    patientInof.setOpaque(false);
-                    patientInof.setBorder(BorderFactory.createEmptyBorder(0, 25, 125, 25));
+                    JPanel patientInfo = new JPanel(new GridLayout(7,1));
+                    patientInfo.setOpaque(false);
+                    patientInfo.setBorder(BorderFactory.createEmptyBorder(0, 25, 125, 25));
                         cin = new MyLabel(currentTheme,"CIN",12,0);
                         cin.changeColor(currentTheme.whiteColor());
                         nom_et_prenom = new MyLabel(currentTheme,"Nom et prenom",20,1);
@@ -154,13 +154,13 @@ public class AjouterPatientView extends JPanel {
                         sexe.changeColor(currentTheme.whiteColor());
                         mutuelle = new MyLabel(currentTheme,"CIMR",16,0);
                         mutuelle.changeColor(currentTheme.whiteColor());
-                    patientInof.add(cin);
-                    patientInof.add(nom_et_prenom);
-                    patientInof.add(email);
-                    patientInof.add(telephone);
-                    patientInof.add(adresse);
-                    patientInof.add(sexe);
-                    patientInof.add(mutuelle);
+                    patientInfo.add(cin);
+                    patientInfo.add(nom_et_prenom);
+                    patientInfo.add(email);
+                    patientInfo.add(telephone);
+                    patientInfo.add(adresse);
+                    patientInfo.add(sexe);
+                    patientInfo.add(mutuelle);
 
                     JPanel footerPanel = new JPanel(new BorderLayout());
                     footerPanel.setBorder(BorderFactory.createEmptyBorder(15, 25, 15, 25));
@@ -176,7 +176,7 @@ public class AjouterPatientView extends JPanel {
                     footerPanel.add(saveBtn, BorderLayout.CENTER);
 
                 patientInfoPanel.add(pfpPanel, BorderLayout.NORTH);
-                patientInfoPanel.add(patientInof, BorderLayout.CENTER);
+                patientInfoPanel.add(patientInfo, BorderLayout.CENTER);
                 patientInfoPanel.add(footerPanel, BorderLayout.SOUTH);
 
                 JPanel formContainerPanel = new JPanel(new GridLayout(6,2));
@@ -366,11 +366,12 @@ public class AjouterPatientView extends JPanel {
 
         errorMessageLabel.setText("");
         updatePicturName();
+        AppFactory.getPatientController().createPatient();
 
-        parentPanel.removeAll();
-        parentPanel.revalidate();
-        parentPanel.repaint();
-        parentPanel.add(AppFactory.getPatientController().showAllPatients());
+//        parentPanel.removeAll();
+//        parentPanel.revalidate();
+//        parentPanel.repaint();
+//        parentPanel.add(AppFactory.getPatientController().showAllPatients());
     }
 
     private void refrech(){

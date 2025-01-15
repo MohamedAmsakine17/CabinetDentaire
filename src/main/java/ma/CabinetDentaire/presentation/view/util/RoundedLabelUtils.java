@@ -20,6 +20,7 @@ public class RoundedLabelUtils {
                 g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
                 // Draw the rounded background
+                g2.setColor(c.getBackground());
                 g2.fillRoundRect(0, 0, c.getWidth(), c.getHeight(), radius, radius);
 
                 // Paint the label's text/icon

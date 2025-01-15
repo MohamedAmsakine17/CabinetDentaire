@@ -46,7 +46,7 @@ public class NavPanel extends JPanel {
         medicament.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
                 updateRightPanel();
-                rightPanel.add(new MedicamentView(currentTheme));
+                rightPanel.add(AppFactory.getMedicamentController().showAllMedicaments());
             }
         });
 
