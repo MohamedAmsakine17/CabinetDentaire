@@ -1,7 +1,9 @@
 package ma.CabinetDentaire.service;
 
+import ma.CabinetDentaire.config.AppFactory;
 import ma.CabinetDentaire.entities.DossierMedicale;
 import ma.CabinetDentaire.entities.Patient;
+import ma.CabinetDentaire.entities.SituationFinanciere;
 import ma.CabinetDentaire.entities.enums.Sexe;
 import ma.CabinetDentaire.entities.enums.StatutPaiment;
 import ma.CabinetDentaire.repository.api.IDossierMedicalRepo;
@@ -62,7 +64,8 @@ public class PatientService implements IPatientService {
     public Patient createPatient(Patient patient) throws PatientException {
         try{
             Patient newPatient = patientRepo.save(patient);
-            dossierMedicalRepo.save(new DossierMedicale(0L,newPatient, LocalDate.now(), StatutPaiment.EN_ATTENTE));
+            DossierMedicale dossierMedicale = dossierMedicalRepo.save(new DossierMedicale(0L,newPatient, LocalDate.now(), StatutPaiment.EN_ATTENTE));
+            AppFactory.getSituationRepo().save(new SituationFinanciere(0L, 0d, 0d, LocalDate.now(), dossierMedicale));
             return newPatient;
         } catch (DaoException e) {
             throw new RuntimeException(e);
@@ -81,6 +84,7 @@ public class PatientService implements IPatientService {
     @Override
     public void deletePatientById(Long id) throws PatientException {
         try{
+            AppFactory.getSituationRepo().delete(AppFactory.getSituationRepo().findByDossierMedicale(dossierMedicalRepo.findByPatientId(id).getId()));
             dossierMedicalRepo.deleteById(dossierMedicalRepo.findByPatientId(id).getId());
             patientRepo.deleteById(id);
         } catch (DaoException e) {

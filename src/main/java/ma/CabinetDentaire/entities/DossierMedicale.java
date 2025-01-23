@@ -49,13 +49,24 @@ public class DossierMedicale {
         this.patient = patient;
     }
 
-
     public LocalDate getDateCreation() {
         return dateCreation;
     }
 
     public void setDateCreation(LocalDate dateCreation) {
         this.dateCreation = dateCreation;
+    }
+
+    public List<RendezVous> getRdvs() {
+        return rdvs;
+    }
+
+    public List<Ordonnance> getOrdonnances() {
+        return ordonnances;
+    }
+
+    public List<Consultation> getConsultations() {
+        return consultations;
     }
 
     public Dentiste getDentiste() {

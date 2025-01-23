@@ -39,6 +39,15 @@ public class MedicamentService implements IMedicamentService {
     }
 
     @Override
+    public Medicament getMedicamentByName(String name) throws MedicamentException {
+        try {
+            return medicamentRepo.getMedicamentByName(name);
+        } catch (DaoException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
     public Medicament addMedicament(Medicament m) throws MedicamentException {
         try{
             return medicamentRepo.save(m);

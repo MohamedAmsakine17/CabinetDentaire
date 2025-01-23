@@ -170,4 +170,13 @@ public class MedicamentRepo implements IMedicamentRepo {
     public static void main(String[] args) throws DaoException {
         new MedicamentRepo().findAll().forEach(medicament -> System.out.println(medicament));
     }
+
+    @Override
+    public Medicament getMedicamentByName(String name) throws DaoException  {
+        return findAll().
+                stream().
+                filter(medicament -> medicament.getNom().equals(name)).
+                findFirst().
+                orElse(null);
+    }
 }

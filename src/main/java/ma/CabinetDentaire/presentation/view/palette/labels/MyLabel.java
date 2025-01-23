@@ -17,7 +17,6 @@ public class MyLabel extends JLabel {
 
     private void _init() {
         setText(text);
-        setForeground(currentTheme.fontColor());
         setFont(new Font(fontName, isBold, fontSize));
         setAlignmentX(Component.CENTER_ALIGNMENT);
 
@@ -30,7 +29,18 @@ public class MyLabel extends JLabel {
         }
     }
 
+    public MyLabel(Theme currentTheme,String iconSrc, int iconSize){
+        this.currentTheme = currentTheme;
+        this.isBold = 1;
+        this.text = "";
+        this.fontSize = iconSize;
+        this.fontName = "Arial";
+        this.iconSrc = iconSrc;
+        this.iconSize = iconSize;
+        setForeground(currentTheme.fontColor());
 
+        _init();
+    }
 
     public MyLabel(Theme currentTheme, String text, int fontSize, int isBold) {
         this.currentTheme = currentTheme;
@@ -39,6 +49,19 @@ public class MyLabel extends JLabel {
         this.fontSize = fontSize;
         this.fontName = "Arial";
         this.iconSrc = null;
+        setForeground(currentTheme.fontColor());
+
+        _init();
+    }
+
+    public MyLabel(Theme currentTheme, String text, int fontSize, int isBold, Color color) {
+        this.currentTheme = currentTheme;
+        this.isBold = isBold;
+        this.text = text;
+        this.fontSize = fontSize;
+        this.fontName = "Arial";
+        this.iconSrc = null;
+        setForeground(color);
         _init();
     }
 
@@ -50,6 +73,8 @@ public class MyLabel extends JLabel {
         this.fontName = "Arial";
         this.iconSrc = iconSrc;
         this.iconSize = iconSize;
+        setForeground(currentTheme.fontColor());
+
         _init();
     }
 

@@ -78,4 +78,14 @@ public class Consultation {
     public void addIntervention(InterventionMedecin interventionMedecin) {
         interventions.add(interventionMedecin);
     }
+
+    @Override
+    public String toString() {
+        return "Consultation{" +
+                "id Ordonnace=" + ordonnance.getIdOrdonnance() +
+                "dateConsultation=" + dateConsultation +
+                ", typeConsultation=" + typeConsultation +
+                ", idConsultation=" + idConsultation +
+                '}';
+    }
 }

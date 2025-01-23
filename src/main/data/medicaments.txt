@@ -13,4 +13,4 @@ ID|PRIX|NOM|DESCRIPTION|image
 12|110|Spray buccal|Spray rafraîchissant pour haleine à base de menthe naturelle.|spray_buccal.png
 13|25|Mini-miroir dentaire|Mini-miroir pour l’inspection de la cavité buccale à domicile.|mini_miror.png
 14|180|Kit de nettoyage orthodontique|Kit complet avec brosse, fil spécial et accessoires pour appareils dentaires.|kit_de_nettoyage.png
-15|20.0|Doliprane|Entrez la description du médicament|Doliprane|
+16|20.0|Dopliprane 200mg|Description de doliprane|Dopliprane200mg|

@@ -128,7 +128,11 @@ public class LoginView extends JFrame {
                         @Override
                         public void actionPerformed(ActionEvent e) {
                             dispose();
-                            new MainView(currentTheme);
+                            try {
+                                new MainView(currentTheme);
+                            } catch (DaoException ex) {
+                                throw new RuntimeException(ex);
+                            }
                         }
                     });
 
@@ -145,7 +149,7 @@ public class LoginView extends JFrame {
 
     }
 
-    public LoginView(Theme currentTheme) {
+    public LoginView(Theme currentTheme) throws DaoException {
         this.currentTheme = currentTheme;
         this.userDAO = new UtilisateurDAO();
 

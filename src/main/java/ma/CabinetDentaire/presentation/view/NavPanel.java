@@ -25,14 +25,18 @@ public class NavPanel extends JPanel {
         NavLink patient = new NavLink(currentTheme, "Patients", "src/main/resources/images/patient_icon.png");
         NavLink medicament = new NavLink(currentTheme, "Medicament", "src/main/resources/images/medicament.png");
         NavLink rendezVous = new NavLink(currentTheme, "Rendez-vous", "src/main/resources/images/rendezvous.png");
-        NavLink consultation = new NavLink(currentTheme, "Consultation", "src/main/resources/images/consultation.png");
-        NavLink ordonnances = new NavLink(currentTheme, "Ordonnances", "src/main/resources/images/ordonnance.png");
+        NavLink peronnel = new NavLink(currentTheme, "Personnels", "src/main/resources/images/leader.png");
+        NavLink caisse = new NavLink(currentTheme, "Caisse", "src/main/resources/images/cashbox.png");
         NavLink deconnexion = new NavLink(currentTheme, "Deconnexion", "src/main/resources/images/logout.png");
 
         dashboard.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
                 updateRightPanel();
-                rightPanel.add(new DashboardView(currentTheme));
+                try {
+                    rightPanel.add(new DashboardView(currentTheme));
+                } catch (DaoException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         });
 
@@ -50,6 +54,28 @@ public class NavPanel extends JPanel {
             }
         });
 
+        rendezVous.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                updateRightPanel();
+                try {
+                    rightPanel.add(new RendezVousView(currentTheme));
+                } catch (DaoException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
+        });
+
+        caisse.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                updateRightPanel();
+                try {
+                    rightPanel.add(new CaiseView(currentTheme));
+                } catch (DaoException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
+        });
+
         deconnexion.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -59,7 +85,11 @@ public class NavPanel extends JPanel {
                 } catch (DaoException ex) {
                     throw new RuntimeException(ex);
                 }
-                new LoginView(currentTheme);
+                try {
+                    new LoginView(currentTheme);
+                } catch (DaoException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         });
 
@@ -71,10 +101,10 @@ public class NavPanel extends JPanel {
         add(medicament);
         add(Box.createRigidArea(new Dimension(0, 25)));
         add(rendezVous);
+//        add(Box.createRigidArea(new Dimension(0, 25)));
+//        add(peronnel);
         add(Box.createRigidArea(new Dimension(0, 25)));
-        add(consultation);
-        add(Box.createRigidArea(new Dimension(0, 25)));
-        add(ordonnances);
+        add(caisse);
         add(Box.createRigidArea(new Dimension(0, 125)));
         add(deconnexion);
     }

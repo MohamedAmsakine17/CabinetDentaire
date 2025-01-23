@@ -80,4 +80,17 @@ public class RendezVous {
     public void setDateRDV(LocalDate dateRDV) {
         this.dateRDV = dateRDV;
     }
+
+    @Override
+    public String toString() {
+        return "RendezVous{" +
+                "id=" + id +
+                ", motif='" + motif + '\'' +
+                ", temps=" + temps +
+                ", dossier=" + dossier +
+                ", consultation=" + consultation +
+                ", typeRDV=" + typeRDV +
+                ", dateRDV=" + dateRDV +
+                '}';
+    }
 }

@@ -9,6 +9,8 @@ import ma.CabinetDentaire.presentation.view.Medicament.ModifierMedicamentView;
 import ma.CabinetDentaire.presentation.view.themes.Theme;
 import ma.CabinetDentaire.service.api.IMedicamentService;
 
+import java.util.List;
+
 public class MedicamentController implements IMedicamentController {
     Theme currentTheme;
     IMedicamentService medicamentService;
@@ -30,6 +32,16 @@ public class MedicamentController implements IMedicamentController {
     public ModifierMedicamentView showModifierMedicamentView(Medicament medicament) {
         modifierMedicamentView = new ModifierMedicamentView(currentTheme,medicament);
         return modifierMedicamentView;
+    }
+
+    @Override
+    public List<Medicament> getAllMedicament() {
+        return  medicamentService.getAll();
+    }
+
+    @Override
+    public Medicament getMedicamentByName(String name) {
+        return medicamentService.getMedicamentByName(name);
     }
 
     @Override

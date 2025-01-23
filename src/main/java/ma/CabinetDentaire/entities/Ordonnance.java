@@ -32,6 +32,16 @@ public class Ordonnance {
         this.date = date;
     }
 
+    @Override
+    public String toString() {
+        return "Ordonnance{" +
+                "idOrdonnance=" + idOrdonnance +
+                ", date=" + date +
+                ", consultationConcernee=" + consultationConcernee +
+                ", prescriptionDeMedicament=" + prescriptionDeMedicament +
+                '}';
+    }
+
     public Consultation getConsultationConcernee() {
         return consultationConcernee;
     }

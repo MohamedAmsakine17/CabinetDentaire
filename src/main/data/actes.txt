@@ -1,0 +1,5 @@
+ID|LIBELLE|PRIX_DE_BASE|CATEGORIE
+1|Nettoyage dentaire|200.0|PREVENTION
+2|Couronne en céramique|1500.0|PROTHESES_DENTAIRES
+3|Appareil dentaire|3000.0|ORTHODONTIE
+4|Implant dentaire|2500.0|IMPLANTOLOGIE

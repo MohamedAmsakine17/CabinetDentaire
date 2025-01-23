@@ -2,6 +2,7 @@ package ma.CabinetDentaire.presentation.view;
 
 import ma.CabinetDentaire.presentation.view.palette.panels.UserInfoPanel;
 import ma.CabinetDentaire.presentation.view.themes.Theme;
+import ma.CabinetDentaire.repository.exceptions.DaoException;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,7 +13,7 @@ public class MainView extends JFrame {
     private JPanel leftPanel;
     private static JPanel rightPanel;
 
-    public void _init(){
+    public void _init() throws DaoException {
         leftPanel = new JPanel();
         rightPanel = new JPanel();
         userInfoPanel = new UserInfoPanel(currentTheme);
@@ -31,7 +32,7 @@ public class MainView extends JFrame {
         add(rightPanel, BorderLayout.CENTER);
     }
 
-    public MainView(Theme currentTheme) {
+    public MainView(Theme currentTheme) throws DaoException {
         this.currentTheme = currentTheme;
 
         setSize(1366, 768);

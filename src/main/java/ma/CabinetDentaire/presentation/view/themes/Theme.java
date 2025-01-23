@@ -20,6 +20,7 @@ public abstract class Theme {
     public  Color redHoverColor() {return new Color(174,75,64);}
 
     public  Color blueColor(){ return new Color(79,152,202); }
+    public  Color blueHoverColor() {return new Color(62,120,159);}
 
     public  Color yellowolor(){ return new Color(255,245,116); }
     public  Color yellowHoverColor() {return new Color(212,205,96);}
